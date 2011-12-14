@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="EndorsementSearch" targetNamespace="http://example.com/namespace/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://example.com/namespace/" xmlns:domain="http://example.com/namespace/domain/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://example.com/namespace/domain/" xmlns="http://example.com/namespace/domain/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:complexType name="Customer">
+            <xsd:sequence>
+               <!-- single type -->
+               <xsd:element name="guid" type="xsd:string"/>
+               <!-- single type -->
+               <xsd:element name="firstname" type="xsd:string"/>
+               <!-- single type -->
+               <xsd:element name="lastname" type="xsd:string"/>
+               <!-- single type -->
+               <xsd:element name="dob" type="xsd:integer"/>
+               <!-- single type -->
+               <xsd:element name="gender" type="Gender"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="Product">
+            <xsd:sequence>
+               <!-- single type -->
+               <xsd:element name="guid" type="xsd:string"/>
+               <!-- collection -->
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="dumb">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <!-- collection -->
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="item">
+                           <xsd:complexType>
+                              <xsd:sequence>
+                                 <!-- single type -->
+                                 <xsd:element name="item" type="Test"/>
+                              </xsd:sequence>
+                           </xsd:complexType>
+                        </xsd:element>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+               <!-- collection -->
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="silly">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <!-- map -->
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="item">
+                           <xsd:complexType>
+                              <xsd:sequence>
+                                 <!-- single type -->
+                                 <xsd:element name="name" type="xsd:integer"/>
+                                 <!-- single type -->
+                                 <xsd:element name="value" type="xsd:string"/>
+                              </xsd:sequence>
+                           </xsd:complexType>
+                        </xsd:element>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+               <!-- collection -->
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="stupid">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <!-- map -->
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="item">
+                           <xsd:complexType>
+                              <xsd:sequence>
+                                 <!-- single type -->
+                                 <xsd:element name="name" type="xsd:string"/>
+                                 <!-- collection -->
+                                 <xsd:element maxOccurs="unbounded" minOccurs="0" name="value">
+                                    <xsd:complexType>
+                                    <xsd:sequence>
+                                    <!-- single type -->
+                                    <xsd:element name="item" type="Customer"/>
+                                    </xsd:sequence>
+                                    </xsd:complexType>
+                                 </xsd:element>
+                              </xsd:sequence>
+                           </xsd:complexType>
+                        </xsd:element>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="Test">
+            <xsd:sequence>
+               <!-- single type -->
+               <xsd:element name="nothing" type="xsd:string"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:simpleType name="Gender">
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="MALE"/>
+               <xsd:enumeration value="FEMALE"/>
+               <xsd:enumeration value="OTHER"/>
+            </xsd:restriction>
+         </xsd:simpleType>
+         <xsd:simpleType name="Something">
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="A"/>
+               <xsd:enumeration value="B"/>
+               <xsd:enumeration value="C"/>
+            </xsd:restriction>
+         </xsd:simpleType>
+         <xsd:element name="RetrieveCustomerIn">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <!-- single type -->
+                  <xsd:element name="guid" type="xsd:string"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="RetrieveCustomerOut">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <!-- single type -->
+                  <xsd:element name="return" type="Customer"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="SearchProductIn">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <!-- single type -->
+                  <xsd:element name="query" type="xsd:string"/>
+                  <!-- single type -->
+                  <xsd:element name="start" type="xsd:integer"/>
+                  <!-- single type -->
+                  <xsd:element name="length" type="xsd:integer"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="SearchProductOut">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <!-- collection -->
+                  <xsd:element maxOccurs="unbounded" minOccurs="0" name="return">
+                     <xsd:complexType>
+                        <xsd:sequence>
+                           <!-- single type -->
+                           <xsd:element name="item" type="Product"/>
+                        </xsd:sequence>
+                     </xsd:complexType>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="CustomerNotFoundExceptionFault">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:sequence>
+                     <!-- single type -->
+                     <xsd:element name="guid" type="xsd:string"/>
+                  </xsd:sequence>
+                  <xsd:sequence>
+                     <!-- single type -->
+                     <xsd:element name="message" type="xsd:string"/>
+                  </xsd:sequence>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="SomeOtherExceptionFault">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:sequence>
+                     <!-- single type -->
+                     <xsd:element name="guid" type="xsd:string"/>
+                  </xsd:sequence>
+                  <xsd:sequence>
+                     <!-- single type -->
+                     <xsd:element name="message" type="xsd:string"/>
+                  </xsd:sequence>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="empty"/>
+      </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="RetrieveCustomerRequest">
+    <wsdl:part name="request" element="domain:RetrieveCustomerIn">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RetrieveCustomerResponse">
+    <wsdl:part name="response" element="domain:RetrieveCustomerOut">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SearchProductResponse">
+    <wsdl:part name="response" element="domain:SearchProductOut">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SomeOtherExceptionFault">
+    <wsdl:part name="faultSomeOtherException" element="domain:SomeOtherExceptionFault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CustomerNotFoundExceptionFault">
+    <wsdl:part name="faultCustomerNotFoundException" element="domain:CustomerNotFoundExceptionFault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpdateIndexRequest">
+    <wsdl:part name="request" element="domain:empty">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SearchProductRequest">
+    <wsdl:part name="request" element="domain:SearchProductIn">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpdateIndexResponse">
+    <wsdl:part name="response" element="domain:empty">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ExamplePortType">
+    <wsdl:operation name="retrieveCustomer">
+      <wsdl:input message="tns:RetrieveCustomerRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:RetrieveCustomerResponse">
+    </wsdl:output>
+      <wsdl:fault name="someOtherExceptionFault" message="tns:SomeOtherExceptionFault">
+    </wsdl:fault>
+      <wsdl:fault name="customerNotFoundExceptionFault" message="tns:CustomerNotFoundExceptionFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="searchProduct">
+      <wsdl:input message="tns:SearchProductRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:SearchProductResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateIndex">
+      <wsdl:input message="tns:UpdateIndexRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:UpdateIndexResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ExampleBinding" type="tns:ExamplePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="retrieveCustomer">
+      <soap:operation soapAction="http://example.com/retrieveCustomer"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="someOtherExceptionFault">
+      </wsdl:fault>
+      <wsdl:fault name="customerNotFoundExceptionFault">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="searchProduct">
+      <soap:operation soapAction="http://example.com/searchProduct"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateIndex">
+      <soap:operation soapAction="http://example.com/updateIndex"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ExampleServiceInterface">
+<wsdl:documentation>This is an example interface this description can be in any format we like with return characters. We defined the begin and end how</wsdl:documentation>
+    <wsdl:port name="ExamplePort" binding="tns:ExampleBinding">
+      <soap:address location="http://set/this/programmatically"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

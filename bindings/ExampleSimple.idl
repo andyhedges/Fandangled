@@ -1,0 +1,6 @@
+interface Example exposes ServiceName {
+
+	@author "Andy Hedges", "andy@hedges.net";
+
+	
+}

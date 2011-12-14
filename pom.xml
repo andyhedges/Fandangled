@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.hedges.fandangled</groupId>
+    <artifactId>fandangled</artifactId>
+    <name>Fandangled</name>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <url>http://fandangled.hedges.net</url>
+    <modules>
+        <module>bindings</module>
+        <module>codec-commons</module>
+        <module>codec-wsdl</module>
+        <module>codec-docx</module>
+        <module>codec-xsd</module>
+    <module>command-line</module>
+  </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

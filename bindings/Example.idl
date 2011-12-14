@@ -1,0 +1,117 @@
+interface Example exposes Foobar {
+
+	/*Primatives are
+	
+	boolean:	true or false
+	byte:		signed 8  bit integer value
+	short:		signed 16 bit integer value
+	int: 		signed 32 bit integer value
+	long:		signed 64 bit integer value
+	float:		signed 32 bit floating point number
+	double: 	signed 64 bit floating point number
+	string: 	UTF-8 encoded string
+	datetime:	a point in time irrespective of timezone with millisecond granularity
+	list:		an order collection of given type (e.g. list<Thing> where Thing is a type)
+	set:		an unordered collection of a given type where no two elements are equal
+	map:		a set of names with given value pair, aka dictionary or associative array
+	
+	*/
+
+	@owner "Andy Hedges", "andy@hedges.net";
+	@author "Joe Bloggs", "joe.bloggs@blogger.com";
+	@author "Jane Bloggs", "jane.bloggs@blogger.com";
+	@version 1.1.1;
+
+	@description "This is an example interface; this description can be in any format we like
+		with return characters and so on. We defined the begin and end how?
+
+		blank line before";
+
+	
+	Customer retrieveCustomer(mandatory string guid) throws CustomerNotFoundException, SomeOtherException {
+		@description "an operation that returns a customer for a given guid";
+		@return "the customer that we wanted to retrieve";
+		@parameter guid, "the guid of the customer that we want to retrieve";
+		@exception CustomerNotFoundException, "when the customer isn't found";
+		@exception SomeOtherException, "something else has gone wrong";
+		@since 1.0.1;
+	}
+	
+	list<Product> searchProduct(mandatory string query, int start, int length) {
+		@description "allows you to find customers based on boolean search queries on specific fields or, by default, all fields";
+		@since 0.0.0;
+		@return "list of products";
+		@parameter query,
+			"the query string for the search. Logical operators and, or, xor can be used between query terms
+			terms can specify a field to apply to such as description:bike and the terms values can be surrounded
+			by quotes to specify multi word phrased such as description:\"men's bikes\"";
+		@parameter start, "for pagination, the first return to be contained in the return list";
+		@parameter length, "the number of results returned in the list";
+	}
+	
+	async void updateIndex (){
+		@description "suggests that the index should be updates as soon as possible";
+		@since 1.0.2;
+		@return "no return type as async";
+	}
+	
+	event SearchIndexUpdated(){
+		@description "this event is raised after the search index has been updated";
+	}
+	
+	event CustomerRetrieved(mandatory string guid){
+		@description "this is a silly example however the idea is that each time a customer is retrieve an event is raised to show that it has been retrieved";
+		@parameter guid, "guid the id of the customer that was retrieved";
+	}
+	
+	type Customer (mandatory string guid,
+			string firstname,
+			string lastname,
+			datetime dob,
+			Gender gender){
+		@description "a Customer is an entity that represents a person who does business with us";
+		@parameter guid,	"the globally unique identifier for the customer";
+		@parameter lastname,	"the last name of the customer";
+		@parameter dob,		"the date of birth of the customer";
+		@parameter gender,	"the identified gender of the customer (i.e. the gender they specify for themselves)";
+		@parameter firstname,	"the first name of the customer";
+	}
+	
+	type Product(mandatory string guid, list<list<Test>> dumb, list<map<int,string>> silly, list<map<string,set<Customer>>> stupid){
+		@description "A product";
+		@parameter guid, "the guid";
+		@parameter silly, "hummm";
+		@parameter stupid, "why does it even allow this?";
+	}
+	
+	type Test(string nothing){
+		@description "Nothing";
+		@parameter nothing, "Nothing";
+	}
+	
+	exception CustomerNotFoundException(string guid, string message){
+		@description "Used to show a customer wasn't found for a given operation";
+		@parameter guid, "the guid of the customer that wasn't found";
+		@parameter message, "a message about why the customer wasn't found";
+	}
+	
+	exception SomeOtherException(string guid, string message){
+		@description "Used to show a customer wasn't found for a given operation";
+		@parameter guid, "the guid of the customer that wasn't found";
+		@parameter message, "a message about why the customer wasn't found";
+	}
+	
+	enumeration Gender (MALE, FEMALE, OTHER) {
+		@description "Gender enum";
+		@value MALE;
+		@value FEMALE;
+		@value OTHER, "when the user doesn't wish to specify or doesn't relate to any other option";
+	}
+	
+	enumeration Something (A, B, C) {
+		@value A;
+		@value B;
+		@value C, "C";
+	}
+
+}

@@ -1,0 +1,157 @@
+gunit Fandangled;
+
+@header{package net.hedges.fandangled.bindings;}
+
+VERSION:
+	"a" FAIL
+	"a.b" FAIL
+	"1" OK
+	"1.2" OK
+	"1.2.3" OK
+	"1.2.3.4" OK
+	"1.2.3." FAIL
+	"12.34.567" OK
+	
+	
+ID:
+
+	"a" OK
+	"1" FAIL
+	"_" OK
+	"ab1" OK
+	"a1b" OK
+	"-ab" FAIL
+	"_1" OK
+	"Bob" OK
+	"bob" OK
+	
+MANDATORY:
+	"mandatory" OK
+	"something else" FAIL
+		
+typeName:
+	"list<Test>" OK
+	"set<Test>" OK
+	"map<Name, Value>" OK
+	"list<set<Test>>" OK
+	"map<map<Something, Whatever>, list<IfYouDoThisYouAreCrazy>>" OK
+	"Test" OK
+	"set<Test,<>Something>" FAIL
+	
+operation:
+	<<
+	async void updateIndex (){
+		@description "suggests that the index should be updates as soon as possible";
+		@since 1.0.2;
+		@return "no return type as async";
+	}
+	>> OK
+	
+	<<
+	Customer retrieveCustomer(mandatory String guid) throws CustomerNotFoundException, SomeOtherException {
+		@description "an operation that returns a customer for a given guid";
+		@since 1.0.1;
+		@return "the customer that we wanted to retrieve";
+		@parameter guid, "the guid of the customer that we want to retrieve";
+		@exception CustomerNotFoundException, "when the customer isn't found";
+		@exception SomeOtherException, "something else has gone wrong";
+	}
+	>> OK
+	
+	<<
+	list<Product> searchProduct(mandatory String query, int start, int length) {
+		@description "allows you to find customers based on boolean search queries on specific fields or, by default, all fields";
+		@since 0.0.0;
+		@return "list of products";
+		@parameter query,
+			"the quesry string for the search. Logical operators and, or, xor can be used between query terms
+			terms can specify a field to apply to such as description:bike and the terms values can be surounded
+			by quotes to specify multi word phrased such as description:\"mens bikes\"";
+		@parameter start, "for pagination, the first return to be contrained in the return list";
+		@parameter length, "the number of results returned in the list";
+	}
+	>> OK
+	
+	<<
+	list<Something> doStuff(mandatory String query, int start, int length) {
+		@description "allows you to find customers based on boolean search queries on specific fields or, by default, all fields";
+		@since 0.0.0;
+		@return "list of stuff";
+		@parameter query,
+			"the query string for the search. Logical operators and, or, xor can be used between query terms
+			terms can specify a field to apply to such as description:bike and the terms values can be surounded
+			by quotes to specify multi word phrased such as description:\"mens bikes\"";
+		@parameter start, "for pagination, the first return to be contrained in the return list";
+		@parameter length, "the number of results returned in the list";
+	}
+	>> OK
+	
+event:
+
+	<<
+	event CustomerRetrieved(mandatory String guid){
+			@description "this is a silly example however the idea is that each time a customer is retrieve an event is raised to show that it has been retrieved";
+			@parameter guid, "the id of the customer that was retrieved";
+	}
+	>> OK
+	
+	<<
+		event SearchIndexUpdated(){
+			@description "this event is raised after the search index has been updated";
+	}
+	>> OK
+	
+type:
+
+	<<
+	type Customer (mandatory String guid,
+			String firstname,
+			String lastname,
+			Date dob,
+			Gender gender){
+		@description "a Customer is an entity that represents a person who does business with us";
+		@parameter guid,	"the globally unique identifier for the customer";
+		@parameter firstname,	"the first name of the customer";
+		@parameter lastname,	"the last name of the customer";
+		@parameter dob,		"the date of birth of the customer";
+		@parameter gender,	"the identified gender of the customer (i.e. the gender they specify for themselves)";
+	}
+	>> OK
+	
+exception:
+	<<
+	exception CustomerNotFoundException(String guid, String message){
+		@description "Used to show a customer wasn't found for a given operation";
+		@parameter guid, "the guid of the customer that wasn't found";
+		@parameter message, "a message about why the customer wasn't found";
+	}
+	>> OK
+	
+enumeration:
+	<<
+	enumeration Gender (MALE, FEMALE, OTHER) {
+		@value MALE;
+		@value FEMALE;
+		@value OTHER, "when the user doesn't wish to specify or doesn't relate to any other option";
+	}
+	>> OK
+
+
+serviceInterface:
+	<<
+	interface CustomerCrud exposes Customer {
+		@author "Andy Hedges", "andy@hedges.net";
+		@version 1.0.1;
+		@description
+			"Here is a super long description
+			That will test just how good our
+			parser and lexer really is! For
+			some reason I call it a \"test\";
+			ok, that seemed to work";
+	}
+	>> OK
+
+ExampleSimple.idl OK
+Example.idl OK
+	
+
