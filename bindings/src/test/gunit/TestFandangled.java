@@ -326,8 +326,8 @@ public class TestFandangled extends gUnitBaseTest {
 	}
 
 	public void testServiceInterface1() throws Exception {
-		// test input: "interface CustomerCrud exposes Customer {\r\n\t@author \"Andy Hedges\", \"andy@hedges.net\";\r\n\t@version 1.0.1;\r\n\t@description\r\n\t\t\"Here is a super long description\r\n\t\tThat will test just how good our\r\n\t\tparser and lexer really is! For\r\n\t\tsome reason I call it a \\\"test\\\";\r\n\t\tok, that seemed to work\";\r\n}\r\n"
-		Object retval = execParser("serviceInterface", "interface CustomerCrud exposes Customer {\r\n\t@author \"Andy Hedges\", \"andy@hedges.net\";\r\n\t@version 1.0.1;\r\n\t@description\r\n\t\t\"Here is a super long description\r\n\t\tThat will test just how good our\r\n\t\tparser and lexer really is! For\r\n\t\tsome reason I call it a \\\"test\\\";\r\n\t\tok, that seemed to work\";\r\n}\r\n", false);
+		// test input: "@fandangled 0.0.1;\r\ninterface CustomerCrud exposes Customer {\r\n\t@author \"Andy Hedges\", \"andy@hedges.net\";\r\n\t@version 1.0.1;\r\n\t@description\r\n\t\t\"Here is a super long description\r\n\t\tThat will test just how good our\r\n\t\tparser and lexer really is! For\r\n\t\tsome reason I call it a \\\"test\\\";\r\n\t\tok, that seemed to work\";\r\n}\r\n"
+		Object retval = execParser("serviceInterface", "@fandangled 0.0.1;\r\ninterface CustomerCrud exposes Customer {\r\n\t@author \"Andy Hedges\", \"andy@hedges.net\";\r\n\t@version 1.0.1;\r\n\t@description\r\n\t\t\"Here is a super long description\r\n\t\tThat will test just how good our\r\n\t\tparser and lexer really is! For\r\n\t\tsome reason I call it a \\\"test\\\";\r\n\t\tok, that seemed to work\";\r\n}\r\n", false);
 		Object actual = examineExecResult(org.antlr.gunit.gUnitParser.OK, retval);
 		Object expecting = "OK";
 

@@ -46,11 +46,11 @@ tokens {
 
 
 serviceInterface 
-	:
+	: fandangledVersionAnnotation
 	INTERFACE ID EXPOSES ID OPEN_CURLY
 		 preambleAnnotation+
 		 structure*
-	 CLOSE_CURLY -> ^(INTERFACE ID ^(EXPOSES ID) preambleAnnotation+ structure*);
+	 CLOSE_CURLY -> ^(INTERFACE ID ^(EXPOSES ID) preambleAnnotation+ structure* fandangledVersionAnnotation);
 
 preambleAnnotation : (    ownerAnnotation
 						| authorAnnotation
@@ -66,7 +66,8 @@ structure :
 		| exception 
 		| enumeration
 		);
-		
+
+fandangledVersionAnnotation : '@fandangled' VERSION SEMICOLON -> ^(VERS VERSION);
 ownerAnnotation			: '@owner' STRING_LITERAL COMMA STRING_LITERAL SEMICOLON -> ^(OWNER STRING_LITERAL STRING_LITERAL);
 authorAnnotation		: '@author' STRING_LITERAL COMMA STRING_LITERAL SEMICOLON -> ^(AUTHOR STRING_LITERAL STRING_LITERAL);
 versionAnnotation		: '@version' VERSION SEMICOLON -> ^(VERS VERSION);

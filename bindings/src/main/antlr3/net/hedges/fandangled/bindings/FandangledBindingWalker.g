@@ -20,7 +20,8 @@ options {
 }
 
 serviceInterface returns [Interface serviceInterface]
-	: ^(INTERFACE name=ID ^(EXPOSES serviceName=ID) preambleAnnotation+ structure*)
+	:
+	 ^(INTERFACE name=ID ^(EXPOSES serviceName=ID) preambleAnnotation+ structure* fandangledVersionAnnotation)
 	
 	{
 		_interface.setName($name.text);
@@ -34,7 +35,16 @@ preambleAnnotation : (    ownerAnnotation {_interface.setOwner($ownerAnnotation.
 						| versionAnnotation {_interface.setVersion($versionAnnotation.version);}
 						| descriptionAnnotation {_interface.setDescription($descriptionAnnotation.description);}
 					  );
-					  
+
+fandangledVersionAnnotation
+        : ^(VERS VERSION) {
+            Metadata metadata = new Metadata();
+            Version version = new Version();
+            version.setValue($VERSION.text);
+            metadata.setVersion(version);
+            _interface.setMetadata(metadata);
+        };
+
 ownerAnnotation	returns [Owner owner]
 		: ^(OWNER name=STRING_LITERAL email=STRING_LITERAL)
 							{

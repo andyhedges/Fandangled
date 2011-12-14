@@ -1,3 +1,4 @@
+@fandangled 0.0.1; // version of Fandangled
 interface Example exposes Foobar {
 
 	/*Primatives are

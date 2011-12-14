@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Interface {
 
+    private Metadata metadata;
 	private String name;
 	private String serviceName;
 	private List<Author> authors = new ArrayList<Author>();
@@ -105,4 +106,11 @@ public class Interface {
 		this.enumerations = enumerations;
 	}
 
+    public Metadata getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(Metadata metadata) {
+        this.metadata = metadata;
+    }
 }

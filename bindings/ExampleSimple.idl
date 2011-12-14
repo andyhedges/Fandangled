@@ -1,3 +1,4 @@
+@fandangled 0.0.1;
 interface Example exposes ServiceName {
 
 	@author "Andy Hedges", "andy@hedges.net";

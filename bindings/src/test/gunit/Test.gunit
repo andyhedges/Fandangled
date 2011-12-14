@@ -139,6 +139,7 @@ enumeration:
 
 serviceInterface:
 	<<
+	@fandangled 0.0.1;
 	interface CustomerCrud exposes Customer {
 		@author "Andy Hedges", "andy@hedges.net";
 		@version 1.0.1;
