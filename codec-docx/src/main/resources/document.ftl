@@ -18,7 +18,7 @@
 		</w:p>
 		<#list operations as operation>
 		    <w:p>
-                <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
+			    <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
                 <w:r><w:t>Operation: ${operation.name?xml} <#if operation.async>(async)</#if></w:t></w:r>
             </w:p>
             <w:p><w:pPr><w:pStyle w:val="Normal"/></w:pPr>
@@ -119,7 +119,7 @@
             </w:p>
             <w:tbl>
                 <w:tblPr>
-                    <w:tblStyle w:val="TableGrid"/>
+                    <w:tblStyle w:val="ColorfulList-Accent3"/>
                     <w:tblW w:w="0" w:type="auto"/>
                     <w:tblLook w:val="04A0"/>
                 </w:tblPr>
@@ -162,7 +162,7 @@
 
 <#macro parameterTableHeader>
     <w:tblPr>
-        <w:tblStyle w:val="TableGrid"/>
+        <w:tblStyle w:val="ColorfulList-Accent3"/>
         <w:tblW w:w="0" w:type="auto"/>
         <w:tblLook w:val="04A0"/>
     </w:tblPr>

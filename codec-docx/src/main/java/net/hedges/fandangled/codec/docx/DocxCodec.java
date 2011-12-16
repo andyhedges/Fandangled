@@ -11,10 +11,8 @@ import net.hedges.fandangled.codec.commons.XMLFormatter;
 import org.docx4j.XmlUtils;
 import org.docx4j.customXmlProperties.DatastoreItem;
 import org.docx4j.docProps.core.CoreProperties;
-import org.docx4j.docProps.core.ObjectFactory;
 import org.docx4j.docProps.extended.Properties;
 import org.docx4j.jaxb.Context;
-import org.docx4j.model.datastorage.BindingHandler;
 import org.docx4j.model.datastorage.CustomXmlDataStorage;
 import org.docx4j.model.datastorage.CustomXmlDataStorageImpl;
 import org.docx4j.model.structure.PageSizePaper;
@@ -23,15 +21,15 @@ import org.docx4j.openpackaging.exceptions.InvalidFormatException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.CustomXmlDataStoragePart;
 import org.docx4j.openpackaging.parts.CustomXmlDataStoragePropertiesPart;
-import org.docx4j.openpackaging.parts.DocPropsCorePart;
-import org.docx4j.openpackaging.parts.PartName;
+import org.docx4j.openpackaging.parts.WordprocessingML.NumberingDefinitionsPart;
+import org.docx4j.openpackaging.parts.WordprocessingML.StyleDefinitionsPart;
+import org.docx4j.openpackaging.parts.relationships.Namespaces;
+import org.docx4j.wml.Numbering;
+import org.docx4j.wml.Styles;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.util.JAXBResult;
 import java.io.*;
-import java.util.Map;
-import java.util.UUID;
 
 /**
  * Created by IntelliJ IDEA.
@@ -60,6 +58,7 @@ public class DocxCodec implements Codec {
             ByteArrayInputStream inCore = new ByteArrayInputStream(core.getBytes());
             wordMLPackage.getDocPropsCorePart().setJaxbElement((CoreProperties) u2.unmarshal(inCore));
 
+            //Thhis sorts out the document properties and therefore the cover page which is driven by them
             String item = generateString("item1.ftl", serviceInterface);
             ByteArrayInputStream inItem = new ByteArrayInputStream(item.getBytes());
             CustomXmlDataStoragePart customXmlDataStoragePart = new CustomXmlDataStoragePart(wordMLPackage.getParts());
@@ -74,6 +73,21 @@ public class DocxCodec implements Codec {
             dsi.setItemID(newItemId);
             part.setJaxbElement(dsi);
             customXmlDataStoragePart.addTargetPart(part);
+
+            //Add numbering part (for headings)
+            NumberingDefinitionsPart ndp = new NumberingDefinitionsPart();
+            ndp.setJaxbElement((Numbering) XmlUtils.unmarshalString(generateString("numbering.ftl", serviceInterface)));
+            wordMLPackage.addTargetPart(ndp);
+            org.docx4j.relationships.ObjectFactory factory = new org.docx4j.relationships.ObjectFactory();
+            org.docx4j.relationships.Relationship rel = factory.createRelationship();
+            rel.setType(Namespaces.NUMBERING);
+            rel.setTarget("numbering.xml");
+            wordMLPackage.getMainDocumentPart().getRelationshipsPart().addRelationship(rel);
+
+            StyleDefinitionsPart sdp = new StyleDefinitionsPart();
+            sdp.setJaxbElement((Styles) XmlUtils.unmarshalString(generateString("styles.ftl", serviceInterface)));
+            wordMLPackage.addTargetPart(sdp);
+
 
             wordMLPackage.save(new File(outputDirectory, serviceInterface.getName() + "-" + serviceInterface.getVersion().getValue() + ".docx"));
         } catch (IOException ioe) {
