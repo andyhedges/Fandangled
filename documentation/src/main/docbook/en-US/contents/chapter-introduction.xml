@@ -1,0 +1,40 @@
+  <!DOCTYPE bookinfo PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Fandangled_Manual.ent">
+%BOOK_ENTITIES;
+]>
+<chapter id="Introduction">
+    <title>Introduction</title>
+    <para>The purpose of the Fandangled framework of which the IDL plays a central role is to enable business
+        analysts to specify service interfaces without the need to detail the technical implementation details of
+        that service. This way business owners can ensure that a service interface exposes the functionality and
+        data they require without having to detail or indeed understand the technical detail of how the service is
+        exposed.
+    </para>
+
+    <para>Service implementers can then take that service interface defintion (an IDL file) and convert it to the
+        technical implementation using either a provided codec or one that they have created themselves. Codecs in
+        Fandangled are always one way and so perhaps they should be called encoders, notwithstanding, their purpose
+        is to translate from IDL to a technical implementation.
+    </para>
+
+    <para>
+        At the time of writing there exists the following codecs:
+        <itemizedlist>
+            <listitem>Microsoft Word Documents in Open Office XML format (usually refered to as docx)</listitem>
+            <listitem>Web Services Description Language (WSDL sometimes pronounced wiz-dul)</listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        Currently in planning or early development are codec for:
+        <itemizedlist>
+            <listitem>Representational State Transfer (REST)</listitem>
+            <listitem>Java Messaging Service (JMS)</listitem>
+            <listitem>A highly efficient binary protocol</listitem>
+        </itemizedlist>
+    </para>
+
+    <para>This document aims to explain the format of the IDL and explain what each format element means at a
+        semantic level
+    </para>
+</chapter>
