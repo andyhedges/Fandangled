@@ -45,6 +45,7 @@ tokens {
  SINCE;
  RETURN;
  VALUE;
+ FANDANGLED;
 }
 
 // What package should the generated source exist in?
@@ -83,7 +84,7 @@ structure :
 		| enumeration
 		);
 
-fandangledVersionAnnotation : '@fandangled' VERSION SEMICOLON -> ^(VERS VERSION);
+fandangledVersionAnnotation : '@fandangled' VERSION SEMICOLON -> ^(FANDANGLED VERSION);
 ownerAnnotation			: '@owner' STRING_LITERAL COMMA STRING_LITERAL SEMICOLON -> ^(OWNER STRING_LITERAL STRING_LITERAL);
 authorAnnotation		: '@author' STRING_LITERAL COMMA STRING_LITERAL SEMICOLON -> ^(AUTHOR STRING_LITERAL STRING_LITERAL);
 versionAnnotation		: '@version' VERSION SEMICOLON -> ^(VERS VERSION);

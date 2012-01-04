@@ -182,27 +182,27 @@
         <w:tblLook w:val="04A0"/>
     </w:tblPr>
     <w:tblGrid>
+        <w:gridCol w:w="1554"/>
         <w:gridCol w:w="1354"/>
-        <w:gridCol w:w="1354"/>
-        <w:gridCol w:w="1354"/>
+        <w:gridCol w:w="1154"/>
         <w:gridCol w:w="4964"/>
     </w:tblGrid>
     <w:tr>
         <w:tc>
-            <w:tcPr><w:tcW w:w="1354" w:type="dxa"/></w:tcPr>
-            <w:p><w:r><w:rPr><w:b/></w:rPr><w:t>Type</w:t></w:r></w:p>
+            <w:tcPr><w:tcW w:w="1554" w:type="dxa"/></w:tcPr>
+            <w:p><w:r><w:rPr></w:rPr><w:t>Type</w:t></w:r></w:p>
         </w:tc>
         <w:tc>
             <w:tcPr><w:tcW w:w="1354" w:type="dxa"/></w:tcPr>
-            <w:p><w:r><w:rPr><w:b/></w:rPr><w:t>Name</w:t></w:r></w:p>
+            <w:p><w:r><w:rPr></w:rPr><w:t>Name</w:t></w:r></w:p>
         </w:tc>
         <w:tc>
-            <w:tcPr><w:tcW w:w="1354" w:type="dxa"/></w:tcPr>
-            <w:p><w:r><w:rPr><w:b/></w:rPr><w:t>Mandatory</w:t></w:r></w:p>
+            <w:tcPr><w:tcW w:w="1154" w:type="dxa"/></w:tcPr>
+            <w:p><w:r><w:rPr></w:rPr><w:t>Mandatory</w:t></w:r></w:p>
         </w:tc>
         <w:tc>
             <w:tcPr><w:tcW w:w="4964" w:type="dxa"/></w:tcPr>
-            <w:p><w:r><w:rPr><w:b/></w:rPr><w:t>Description</w:t></w:r></w:p>
+            <w:p><w:r><w:rPr></w:rPr><w:t>Description</w:t></w:r></w:p>
         </w:tc>
     </w:tr>
 </#macro>
@@ -232,7 +232,7 @@
 
 <#macro returnTable return>
     <w:tblPr>
-        <w:tblStyle w:val="TableGrid"/>
+        <w:tblStyle w:val="ColorfulList-Accent3"/>
         <w:tblW w:w="0" w:type="auto"/>
         <w:tblLook w:val="04A0"/>
     </w:tblPr>
@@ -243,11 +243,11 @@
     <w:tr>
         <w:tc>
             <w:tcPr><w:tcW w:w="2708" w:type="dxa"/></w:tcPr>
-            <w:p><w:r><w:rPr><w:b/></w:rPr><w:t>Type</w:t></w:r></w:p>
+            <w:p><w:r><w:rPr></w:rPr><w:t>Type</w:t></w:r></w:p>
         </w:tc>
         <w:tc>
             <w:tcPr><w:tcW w:w="6318" w:type="dxa"/></w:tcPr>
-            <w:p><w:r><w:rPr><w:b/></w:rPr><w:t>Description</w:t></w:r></w:p>
+            <w:p><w:r><w:rPr/><w:t>Description</w:t></w:r></w:p>
         </w:tc>
     </w:tr>
     <w:tr>

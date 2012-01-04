@@ -53,7 +53,7 @@ preambleAnnotation : (    ownerAnnotation {_interface.setOwner($ownerAnnotation.
 					  );
 
 fandangledVersionAnnotation
-        : ^(VERS VERSION) {
+        : ^(FANDANGLED VERSION) {
             Metadata metadata = new Metadata();
             Version version = new Version();
             version.setValue($VERSION.text);
