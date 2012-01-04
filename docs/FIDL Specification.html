@@ -1,0 +1,121 @@
+<html>
+<head>
+	<title>The Fandangle Interface Definition Language (FIDL) Specification - version 0.0.1</title>
+</head>
+<body>
+
+<h1>The Fandangle Interface Definition Language (FIDL) Specification</h1>
+
+<h2>Overview</h2>
+
+<p>The purpose of the Fandangled framework of which the IDL plays a central role is to enable Service analysts to specify service interfaces without the need to detail the technical implementation details of that service. This way business owners can ensure that a service interface exposes the functionality and data they require without having to detail or indeed understand the technical detail of how the service is exposed.</p>
+
+<p>Service implementors can then take that service interface defintion (an IDL file) and convert it to the technical implementation using either a provided codec or one that they have created themselves. Codecs in Fandangled are always one way and so perhaps they should be called encoders, notwithstanding, their purpose is to translate from IDL to a technical implementation.</p>
+
+<p>
+	At the time of writing there exists the following codecs:
+	<ul>
+		<li>Microsoft Word Documents in Open Office XML format (usually refered to as docx)</li>
+		<li>Web Services Description Language (WSDL sometimes pronounced wiz-dul)</li>
+	</ul>
+</p>
+
+<p>
+	Currently in planning or early development are codec for:
+	<ul>
+		<li>Representational State Transfer (REST)</li>
+		<li>Java Messaging Service (JMS)</li>
+		<li>A highly efficient binary protocol</li>
+	</ul>
+</p>
+
+<p>This document aims to explain the format of the IDL and explain what each format element means at a sematic level</p>
+
+<h2>File Format</h2>
+
+<p>The file format is a text document, created by any modern text editor such as Notepad, Textpad, vi or gedit. We recommend UTF-8 for the character encoding but ISO-8859-1 and other encoding will work equally well.</p>
+
+<p>The style of the interface definition is very similar to a Java or C# interface however with an emphasis on documentation and business functionality rather than details of scoping and other coding concerns.</p>
+
+<h3>Attributes</h3>
+
+<p>Most information is tagged with attribute names and each attribute definition is terminated with a semi-colon. An attribute will look somehting like:</p>
+
+<code>@something string, "some free text in inverted commas";</code>
+
+<p>The attribute name is preceeded with the '@' symobol and conforms to the format of an ID (see below)</p>
+
+<h3>Attibute Properties</h3>
+
+<p>An attribute has a number of properties and each property is either an ID, a free text field or a version number<p>
+
+<h4>IDs</h4>
+
+<p>An ID is a string that must start with a letter or an underscore (_) followed by zero or more letters numbers or underscores. All letters must be unaccented latin characters.</p>
+
+<h4>Free Text Fields</h4>
+
+<p>Free text fields are surrounded by double quotes and can contain any character sequence including new line indicators. In order to have a literal double quote in a free text field it must be delimited with a backslash. The following is a simple example:</p>
+
+<code>"This is a simple example"</code>
+
+<p>A more complex example might be</p>
+
+<code>
+"Is this a multiline example with a double quotes in it&#8253;</br></br>
+
+Yes, it is. What I really need is an accented word like \"na&#239;vet&#233;\" to demonstrate accents"
+</code>
+
+<h4>Version numbers</h4>
+
+<p>Version numbers in Fandanged are dot separated numbers, they should be strictly increasing with the left being the most significant part. A simple example of a version number is:</p>
+
+<code>1.12.10</code>
+
+<h3>Preamble</h3>
+
+<p>The preamble defines a number of peice of information. Let's look at a barebones IDL file to get a feel for the structure of the preamble</p>
+
+<code><pre>
+@fandangled 0.0.1;
+interface InterfaceName exposes ServiceName{
+	@owner "John Smith", "john.smith@uk.example.com";
+	@author "Simon Jones", "simon.jones@us.example.com";
+	@author "Susan Papadopoulos", "susan.papadopoulos@example.org";
+	@version 0.0.1;
+}
+</pre></code>
+
+<h4>Version of Fandangled IDL</h4>
+
+<p>All FIDLs should start with the version of FIDL specification they conform to, in this case 0.0.1, the attribute name for this information is fandangled<p>
+
+<code>@fandangled 0.0.1;</code>
+
+<p>The FIDL version must appear as the first non whitespace in the file</p>
+
+<h4>Interface Name</h4>
+
+<p>The interface name in this case 'InterfaceName' is whatever you wish to call the service interface, it must be a valid ID</p>
+
+<h4>Service Name</h4>
+
+<p>The service name is the name of the service on which this interface exposes data and functionality. In future this will cause types, enumerations and exception to be imported into the interace, for now it is just a marker</p>
+
+<h4>Owner</h4>
+
+<p>This is the name and email address of the person accountable for the interface. We strongly recommend this is an individual rather than a role. There can only be one owner.</p>
+
+<h4>Author</h4>
+
+<p>This is the name and email address of the author of the interface. This annotation can be repeated multiple times in the case that multiple people have worked on the interface definition</p>
+
+<h4>Version of the Interace</h4>
+
+<p>This is the version of this particular interface, this is reference by the @since attributes of many of the other structures in the file</p>
+
+
+</body>
+
+</html>
