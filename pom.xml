@@ -28,6 +28,7 @@
         <module>codec-docx</module>
         <module>codec-xsd</module>
     <module>command-line</module>
+    <module>basic-gui</module>
   </modules>
 
     <build>

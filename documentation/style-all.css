@@ -1,0 +1,10 @@
+body {
+    font-family:'Lucida Grande', Geneva, Verdana, Arial, sans-serif;
+}
+
+code {
+    display: block;
+    border: 1px solid #ccc;
+    background: #ddd;
+    margin: 0 50px 0;
+}
