@@ -1,10 +1,60 @@
 body {
     font-family:'Lucida Grande', Geneva, Verdana, Arial, sans-serif;
+    background: #eee;
 }
+
+#page{
+    margin: 0 15% 10px;
+    background: #fff;
+    padding: 0 25px 10px;
+}
+
+h1 {
+    font-size: 180%;
+    color: #00a;
+}
+
+h2 {
+    font-size: 160%;
+    color: #00c;
+}
+
+h3 {
+    font-size: 130%;
+    color: #00e;
+}
+
+h4 {
+    font-size: 100%;
+    color: #44f;
+}
+
+
 
 code {
     display: block;
     border: 1px solid #ccc;
     background: #ddd;
     margin: 0 50px 0;
+    white-space: pre;
+    font-family: monospace;
+}
+
+code strong {
+   font-weight:900;
+   color: #f00;
+}
+
+p {
+    margin: 0 5px 10px;
+}
+
+var {
+    font-style: normal;
+    font-family: monospace;
+}
+
+dt{
+    font-weight: bold;
+    margin: 5px 5px 0;
 }

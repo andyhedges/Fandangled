@@ -5,143 +5,371 @@
 </head>
 <body>
 
-<h1>The Fandangle Interface Definition Language (FIDL) Specification</h1>
+<div id="page">
+    <h1>The Fandangle Interface Definition Language (FIDL) Specification</h1>
 
-<h2>Overview</h2>
+    <h2>Overview</h2>
 
-<p>The purpose of the Fandangled framework of which the IDL plays a central role is to enable Service analysts to
-    specify service interfaces without the need to detail the technical implementation details of that service. This way
-    business owners can ensure that a service interface exposes the functionality and data they require without having
-    to detail or indeed understand the technical detail of how the service is exposed.</p>
+    <p>The purpose of the Fandangled framework of which the IDL plays a central role is to enable Service analysts to
+        specify service interfaces without the need to detail the technical implementation details of that service. This
+        way
+        business owners can ensure that a service interface exposes the functionality and data they require without
+        having
+        to detail or indeed understand the technical detail of how the service is exposed.</p>
 
-<p>Service implementors can then take that service interface defintion (an IDL file) and convert it to the technical
-    implementation using either a provided codec or one that they have created themselves. Codecs in Fandangled are
-    always one way and so perhaps they should be called encoders, notwithstanding, their purpose is to translate from
-    IDL to a technical implementation.</p>
+    <p>Service implementors can then take that service interface defintion (an IDL file) and convert it to the technical
+        implementation using either a provided codec or one that they have created themselves. Codecs in Fandangled are
+        always one way and so perhaps they should be called encoders, notwithstanding, their purpose is to translate
+        from
+        IDL to a technical implementation.</p>
 
-<p>
-    At the time of writing there exists the following codecs:
-<ul>
-    <li>Microsoft Word Documents in Open Office XML format (usually refered to as docx)</li>
-    <li>Web Services Description Language (WSDL sometimes pronounced wiz-dul)</li>
-</ul>
-</p>
+    <p>
+        At the time of writing there exists the following codecs:
+    <ul>
+        <li>Microsoft Word Documents in Open Office XML format (usually refered to as docx)</li>
+        <li>Web Services Description Language (WSDL sometimes pronounced wiz-dul)</li>
+    </ul>
+    </p>
 
-<p>
-    Currently in planning or early development are codec for:
-<ul>
-    <li>Representational State Transfer (REST)</li>
-    <li>Java Messaging Service (JMS)</li>
-    <li>A highly efficient binary protocol</li>
-</ul>
-</p>
+    <p>
+        Currently in planning or early development are codec for:
+    <ul>
+        <li>Representational State Transfer (REST)</li>
+        <li>Java Messaging Service (JMS)</li>
+        <li>An efficient binary protocol</li>
+    </ul>
+    </p>
 
-<p>This document aims to explain the format of the IDL and explain what each format element means at a sematic level</p>
+    <p>This document aims to explain the format of the IDL and explain what each format element means at a sematic
+        level</p>
 
-<h2>File Format</h2>
+    <h2>File Format</h2>
 
-<p>The file format is a text document, created by any modern text editor such as Notepad, Textpad, vi or gedit. We
-    recommend UTF-8 for the character encoding but ISO-8859-1 and other encoding will work equally well.</p>
+    <p>The file format is a text document, created by any modern text editor such as Notepad, Textpad, vi or gedit. We
+        recommend UTF-8 for the character encoding but ISO-8859-1 and other encoding will work equally well.</p>
 
-<p>The style of the interface definition is very similar to a Java or C# interface however with an emphasis on
-    documentation and business functionality rather than details of scoping and other coding concerns.</p>
+    <p>The style of the interface definition is very similar to a Java or C# interface however with an emphasis on
+        documentation and business functionality rather than details of scoping and other coding concerns.</p>
 
-<h3>Attributes</h3>
+    <h3>Attributes</h3>
 
-<p>Most information is tagged with attribute names and each attribute definition is terminated with a semi-colon. An
-    attribute will look somehting like:</p>
+    <p>Most information is tagged with attribute names and each attribute definition is terminated with a semi-colon. An
+        attribute will look somehting like:</p>
 
-<code>@something string, "some free text in inverted commas";</code>
+    <code>@something string, "some free text in inverted commas";</code>
 
-<p>The attribute name is preceeded with the '@' symobol and conforms to the format of an ID (see below)</p>
+    <p>The attribute name is preceeded with the '@' symobol and conforms to the format of an ID (see below)</p>
 
-<h3>Attibute Properties</h3>
+    <h3>Attibute Properties</h3>
 
-<p>An attribute has a number of properties and each property is either an ID, a free text field or a version number
+    <p>An attribute has a number of properties and each property is either an ID, a free text field or a version number
 
-<p>
+    <p>
 
-<h4>IDs</h4>
+    <h4>IDs</h4>
 
-<p>An ID is a string that must start with a letter or an underscore (_) followed by zero or more letters numbers or
-    underscores. All letters must be unaccented latin characters.</p>
+    <p>An ID is a string that must start with a letter or an underscore (_) followed by zero or more letters numbers or
+        underscores. All letters must be unaccented latin characters.</p>
 
-<h4>Free Text Fields</h4>
+    <h4>Free Text Fields</h4>
 
-<p>Free text fields are surrounded by double quotes and can contain any character sequence including new line
-    indicators. In order to have a literal double quote in a free text field it must be delimited with a backslash. The
-    following is a simple example:</p>
+    <p>Free text fields are surrounded by double quotes and can contain any character sequence including new line
+        indicators. In order to have a literal double quote in a free text field it must be delimited with a backslash.
+        The
+        following is a simple example:</p>
 
-<code>"This is a simple example"</code>
+    <code>"This is a simple example"</code>
 
-<p>A more complex example might be</p>
+    <p>A more complex example might be</p>
 
-<code>
-    "Is this a multiline example with a double quotes in it&#8253;</br></br>
+    <code>
+        "Is this a multiline example with a double quotes in it&#8253;<br/><br/>
 
-    Yes, it is. What I really need is an accented word like \"na&#239;vet&#233;\" to demonstrate accents"
-</code>
+        Yes, it is. What I really need is an accented word like \"na&#239;vet&#233;\" to demonstrate accents"
+    </code>
 
-<h4>Version numbers</h4>
+    <h4>Version numbers</h4>
 
-<p>Version numbers in Fandanged are dot separated numbers, they should be strictly increasing with the left being the
-    most significant part. A simple example of a version number is:</p>
+    <p>Version numbers in Fandanged are dot separated numbers, they should be strictly increasing with the left being
+        the
+        most significant part. A simple example of a version number is:</p>
 
-<code>1.12.10</code>
+    <code>1.12.10</code>
 
-<h3>Preamble</h3>
+    <h3>Preamble</h3>
 
-<p>The preamble defines a number of peice of information. Let's look at a barebones IDL file to get a feel for the
-    structure of the preamble</p>
+    <p>The preamble defines a number of peice of information. Let's look at a barebones IDL file to get a feel for the
+        structure of the preamble</p>
 
-<code><pre>
-@fandangled 0.0.1;
+    <code>@fandangled 0.0.1;
 interface InterfaceName exposes ServiceName{
-	@owner "John Smith", "john.smith@uk.example.com";
-	@author "Simon Jones", "simon.jones@us.example.com";
-	@author "Susan Papadopoulos", "susan.papadopoulos@example.org";
-	@version 0.0.1;
+    @owner "John Smith", "john.smith@uk.example.com";
+    @author "Simon Jones", "simon.jones@us.example.com";
+    @author "Susan Papadopoulos", "susan.papadopoulos@example.org";
+    @version 0.0.1;
+}</code>
+
+    <h4>Version of Fandangled IDL</h4>
+
+    <p>All FIDLs should start with the version of FIDL specification they conform to, in this case 0.0.1, the attribute
+        name
+        for this information is fandangled
+    </p>
+
+    <code><strong>@fandangled 0.0.1; </strong>
+interface InterfaceName exposes ServiceName{
+    @owner "John Smith", "john.smith@uk.example.com";
+    @author "Simon Jones", "simon.jones@us.example.com";
+    @author "Susan Papadopoulos", "susan.papadopoulos@example.org";
+    @version 0.0.1;
+}</code>
+
+    <p>The FIDL version must appear as the first non whitespace in the file</p>
+
+    <h4>Interface Name</h4>
+
+    <p>The interface name in this case 'InterfaceName' is whatever you wish to call the service interface, it must be a
+        valid ID</p>
+
+    <code>@fandangled 0.0.1;
+interface <strong>InterfaceName</strong> exposes ServiceName{
+    @owner "John Smith", "john.smith@uk.example.com";
+    @author "Simon Jones", "simon.jones@us.example.com";
+    @author "Susan Papadopoulos", "susan.papadopoulos@example.org";
+    @version 0.0.1;
+}</code>
+
+    <h4>Service Name</h4>
+
+    <p>The service name is the name of the service on which this interface exposes data and functionality. In future
+        this
+        will cause types, enumerations and exception to be imported into the interface, for now it is just a marker</p>
+
+    <code>@fandangled 0.0.1;
+interface InterfaceName exposes <strong>ServiceName</strong>{
+    @owner "John Smith", "john.smith@uk.example.com";
+    @author "Simon Jones", "simon.jones@us.example.com";
+    @author "Susan Papadopoulos", "susan.papadopoulos@example.org";
+    @version 0.0.1;
+}</code>
+
+    <h4>Owner</h4>
+
+    <p>This is the name and email address of the person accountable for the interface. We strongly recommend this is an
+        individual rather than a role. There can only be one owner.</p>
+
+    <code>@fandangled 0.0.1;
+interface InterfaceName exposes ServiceName{
+    <strong>@owner "John Smith", "john.smith@uk.example.com"; </strong>
+    @author "Simon Jones", "simon.jones@us.example.com";
+    @author "Susan Papadopoulos", "susan.papadopoulos@example.org";
+    @version 0.0.1;
+}</code>
+
+    <h4>Author</h4>
+
+    <p>This is the name and email address of the author of the interface. This annotation can be repeated multiple times
+        in
+        the case that multiple people have worked on the interface definition</p>
+
+    <code>@fandangled 0.0.1;
+interface InterfaceName exposes ServiceName{
+    @owner "John Smith", "john.smith@uk.example.com";
+    <strong>@author "Simon Jones", "simon.jones@us.example.com";
+    @author "Susan Papadopoulos", "susan.papadopoulos@example.org";</strong>
+    @version 0.0.1;
+ }</code>
+
+    <h4>Version of the Interace</h4>
+
+    <p>This is the version of this particular interface, this is reference by the <var>@since</var> attributes of many of the other
+        structures in the file</p>
+
+    <code>@fandangled 0.0.1;
+interface InterfaceName exposes ServiceName{
+    @owner "John Smith", "john.smith@uk.example.com";
+    @author "Simon Jones", "simon.jones@us.example.com";
+    @author "Susan Papadopoulos", "susan.papadopoulos@example.org";
+    <strong>@version 0.0.1;</strong>
+}</code>
+
+
+    <h3>Operations</h3>
+
+    <p>Operations represent callable behaviour on the service interface. An operation takes a set of parameters as a
+    request and returns a single parameter of a specified type if things go to plan. Otherwise it will return a single
+    exception. Here follows an example of an operation in FIDL:</p>
+
+<code>Money currencyConvert(mandatory Money sourceAmount, Currency currency) throws ExchangeRateOutOfDateException {
+	@description "Converts a given amount of money into the equivalent amount according to the current exchange rates
+                    available";
+	@return "the equivalent amount in the required currency";
+	@parameter sourceAmount, "The amount of money to convert";
+	@parameter currency, "the currency to convert the amount to, if not specified USD will be assumed";
+	@exception ExchangeRateOutOfDateException, "If the exchange rate for the currencies required are not up to date
+                                                    enough the conversion cannot be calculated";
+	@since 0.0.1;
 }
-</pre>
 </code>
 
-<h4>Version of Fandangled IDL</h4>
+    <h4>Return</h4>
+    <p>The return type of the operation is defined at the start of the method signature. In this case it is a <var>Money</var>
+        type.</p>
 
-<p>All FIDLs should start with the version of FIDL specification they conform to, in this case 0.0.1, the attribute name
-    for this information is fandangled
+    <p>A description of the return type is provided in the body of the operation against the <var>@return</var> attribute</p>
 
-<p>
+<code><strong>Money</strong> currencyConvert(mandatory Money sourceAmount, Currency currency) throws ExchangeRateOutOfDateException {
+	@description "Converts a given amount of money into the equivalent amount according to the current exchange rates
+                    available";
+	<strong>@return "the equivalent amount in the required currency";</strong>
+	@parameter sourceAmount, "The amount of money to convert";
+	@parameter currency, "the currency to convert the amount to, if not specified USD will be assumed";
+	@exception ExchangeRateOutOfDateException, "If the exchange rate for the currencies required are not up to date
+                                                    enough the conversion cannot be calculated";
+	@since 0.0.1;
+}</code>
 
-    <code>@fandangled 0.0.1;</code>
-
-<p>The FIDL version must appear as the first non whitespace in the file</p>
-
-<h4>Interface Name</h4>
-
-<p>The interface name in this case 'InterfaceName' is whatever you wish to call the service interface, it must be a
-    valid ID</p>
-
-<h4>Service Name</h4>
-
-<p>The service name is the name of the service on which this interface exposes data and functionality. In future this
-    will cause types, enumerations and exception to be imported into the interace, for now it is just a marker</p>
-
-<h4>Owner</h4>
-
-<p>This is the name and email address of the person accountable for the interface. We strongly recommend this is an
-    individual rather than a role. There can only be one owner.</p>
-
-<h4>Author</h4>
-
-<p>This is the name and email address of the author of the interface. This annotation can be repeated multiple times in
-    the case that multiple people have worked on the interface definition</p>
-
-<h4>Version of the Interace</h4>
-
-<p>This is the version of this particular interface, this is reference by the @since attributes of many of the other
-    structures in the file</p>
+    <h4>Operation Name</h4>
+    <p>This is simply the operation name</p>
 
 
+    <code>Money <strong>currencyConvert</strong>(mandatory Money sourceAmount, Currency currency) throws ExchangeRateOutOfDateException {
+	@description "Converts a given amount of money into the equivalent amount according to the current exchange rates
+                    available";
+	@return "the equivalent amount in the required currency";
+	@parameter sourceAmount, "The amount of money to convert";
+	@parameter currency, "the currency to convert the amount to, if not specified USD will be assumed";
+	@exception ExchangeRateOutOfDateException, "If the exchange rate for the currencies required are not up to date
+                                                    enough the conversion cannot be calculated";
+	@since 0.0.1;
+}
+</code>
+
+    <h4>Parameters</h4>
+
+    <p>Parameters are defined after the operation name in brackets. A parameter consists of the an optional keyword
+        <var>mandatory</var> meaning that the caller should always specify a value for it. Following this the
+    parameters type is defined followed by a name for that parameter. More than one parameter definition can be
+    specified for an operation, they are simply separated by commas.</p>
+
+    <p>For each parameter a <var>@parameter</var> attribute it defined in the body of the operation. This allows for the
+    parameter to be documented</p>
+
+<code>Money currencyConvert(<strong>mandatory Money sourceAmount, Currency currency</strong>) throws ExchangeRateOutOfDateException {
+	@description "Converts a given amount of money into the equivalent amount according to the current exchange rates
+                    available";
+	@return "the equivalent amount in the required currency";
+	<strong>@parameter sourceAmount, "The amount of money to convert";
+	@parameter currency, "the currency to convert the amount to, if not specified USD will be assumed";</strong>
+	@exception ExchangeRateOutOfDateException, "If the exchange rate for the currencies required are not up to date
+                                                    enough the conversion cannot be calculated";
+	@since 0.0.1;
+}
+</code>
+
+    <h4>Exceptions</h4>
+    <p>Exceptions are returned from operations when there the operation cannot be completed correctly for whatever
+        reason. The exception types that the operation can return are defined after the <var>throws</var> keyword.
+    More than one exception can be specified by providing a comma separated list.</p>
+
+    <p>The reason why the operation would throw this kind of exception is specified in the @exception attribute. The
+    format first specifies the exception type followed by the description.</p>
+
+    <code>Money currencyConvert(mandatory Money sourceAmount, Currency currency) throws <strong>ExchangeRateOutOfDateException</strong> {
+	@description "Converts a given amount of money into the equivalent amount according to the current exchange rates
+                    available";
+	@return "the equivalent amount in the required currency";
+	@parameter sourceAmount, "The amount of money to convert";
+	@parameter currency, "the currency to convert the amount to, if not specified USD will be assumed";
+	<strong>@exception ExchangeRateOutOfDateException, "If the exchange rate for the currencies required are not up to date
+                                                    enough the conversion cannot be calculated";</strong>
+	@since 0.0.1;
+}
+</code>
+
+    <h4>Since</h4>
+
+    <p>The <var>@since</var> atrribute specifies the version of the interface that the operation was introduced in.
+    Authors should be clear that any breaking amendment to the operation must require an update to the <var>@since</var>
+    field. So for example in a new parameter is added to an operation then the <var>@since</var> attribute should be update to the
+    version of the interface where that parameter was added. It must not be left at the value that an operation with the
+    same name as added.</p>
+
+<code>Money currencyConvert(mandatory Money sourceAmount, Currency currency) throws ExchangeRateOutOfDateException {
+	@description "Converts a given amount of money into the equivalent amount according to the current exchange rates
+                    available";
+	@return "the equivalent amount in the required currency";
+	@parameter sourceAmount, "The amount of money to convert";
+	@parameter currency, "the currency to convert the amount to, if not specified USD will be assumed";
+	@exception ExchangeRateOutOfDateException, "If the exchange rate for the currencies required are not up to date
+                                                    enough the conversion cannot be calculated";
+	<strong>@since 0.0.1;</strong>
+}
+</code>
+    <h3>Types, Events and Exceptions</h3>
+
+    <p>Types, Events and Exceptions all follow exactly the same structure. The only difference being the keyword they
+    are proceeded by (i.e type, event or exception). The rest of the structure of type is the same as operations only
+    a type cannot throw an exception or have a return.</p>
+
+<code>type Person (mandatory string firstname, mandatory string lastname, mandatory Gender gender, string email,
+    datetime dateOfBirth){
+	@description "Represents basic information on a person";
+	@parameter firstname, "The persons firsname.";
+	@parameter lastname, "The persons lastname (i.e. surname).";
+	@parameter gender, "the gendered of the person";
+	@parameter email, "the persons SMTP email address";
+	@since 0.0.1;
+}</code>
+
+    <h3>Enumerations</h3>
+    <p>Enumerations are used to provide a list of values that a certain property should be constrained to. They are
+    mostly self explanatory. They have a description just like operations and types, the possible values are listed in
+    brackets, however they don't need to specify the type or whether they are mandatory. Each value can be documented
+    (or not, quite often they are obvious) in the body of the enumeration using the <var>@value</var> attribute.</p>
+
+<code>enumeration Day(MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY){
+    @description "Gregorian days of the week.";
+    @value MONDAY, "blue";
+    @value TUESDAY, "gray";
+    @value WEDNESDAY, "gray too";
+    @value THURSDAY, "don't care";
+    @value FRIDAY, "I'm in love";
+    //Not documenting the rest because it's isn't required and there aren't song lyrics for them
+    @since 0.0.1;
+}</code>
+
+    <h3>Primitive Types</h3>
+    <p>FIDL has a number of build in primative types. These are as follows:</p>
+
+
+    <dl>
+        <dt>string</dt><dd>A piece of text; a sequence of characters</dd>
+        <dt>boolean</dt><dd>true or false</dd>
+        <dt>byte</dt><dd>an 8-bit signed integer</dd>
+        <dt>short</dt><dd>a 16-bit signed integer</dd>
+        <dt>int</dt><dd>a 32-bit signed integer</dd>
+        <dt>long</dt><dd>a 64-bit signed integer</dd>
+        <dt>float</dt><dd>a 32-bit signed decimal</dd>
+        <dt>double</dt><dd>a 64-bit signed decimal</dd>
+        <dt>datetime</dt><dd>a point in time irrespective of timezone with millisecond granularity</dd>
+    </dl>
+
+    <h3>Primitive Collections</h3>
+    <p>The are 3 collection types that can be used in FIDL. The are parametrized by the types that can contain. The
+    parameterization is specified in chevrons after that declation. There
+    3 types are as follows:</p>
+
+    <dl>
+        <dt>list</dt>
+        <dd>a collection that can contain multiple copies of the same instance (e.g. <var>list&lt;Person&gt;</var>)</dd>
+        <dt>set</dt>
+        <dd>a collection that can not contain multiple copies of the same instance (e.g. <var>set&lt;Person&gt;</var>)</dd>
+        <dt>map</dt>
+        <dd>an associative array or dictionary (e.g. <var>map&lt;string, Person&gt;</var>)</dd>
+    </dl>
+
+</div>
 </body>
 
 </html>
