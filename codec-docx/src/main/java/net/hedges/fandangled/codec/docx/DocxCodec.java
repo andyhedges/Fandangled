@@ -66,7 +66,7 @@ public class DocxCodec implements Codec {
             ByteArrayInputStream inCore = new ByteArrayInputStream(core.getBytes());
             wordMLPackage.getDocPropsCorePart().setJaxbElement((CoreProperties) u2.unmarshal(inCore));
 
-            //Thhis sorts out the document properties and therefore the cover page which is driven by them
+            //This sorts out the document properties and therefore the cover page which is driven by them
             String item = generateString("item1.ftl", serviceInterface);
             ByteArrayInputStream inItem = new ByteArrayInputStream(item.getBytes());
             CustomXmlDataStoragePart customXmlDataStoragePart = new CustomXmlDataStoragePart(wordMLPackage.getParts());

@@ -29,6 +29,7 @@
         <module>codec-xsd</module>
     <module>command-line</module>
     <module>basic-gui</module>
+    <module>codec-poco</module>
   </modules>
 
     <build>

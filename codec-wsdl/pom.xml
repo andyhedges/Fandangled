@@ -38,7 +38,7 @@
         <dependency>
             <groupId>net.hedges.fandangled</groupId>
             <artifactId>codec-commons</artifactId>
-            <version>0.01-SNAPSHOT</version>
+            <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
