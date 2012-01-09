@@ -179,17 +179,13 @@
 		<xsd:element name="${name}" type="${primitives[typeInfo.typeName]!typeInfo.typeName}" <@cardinality mandatory/>/>
 	<#elseif typeInfo.class.simpleName == "CollectionInfo">
 	    <#-- collection -->
-	    <#if typeInfo.containedTypeInfo.class.simpleName == "TypeInfo">
-            <xsd:element name="${name}" minOccurs="0" maxOccurs="unbounded" type="${primitives[typeInfo.containedTypeInfo.typeName]!typeInfo.containedTypeInfo.typeName}"/>
-	    <#else>
-            <xsd:element name="${name}" minOccurs="0" maxOccurs="unbounded">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <@typeMac typeInfo=typeInfo.containedTypeInfo name="item" mandatory=true/>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-		</#if>
+        <xsd:element name="${name}" minOccurs="0" maxOccurs="unbounded">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <@typeMac typeInfo=typeInfo.containedTypeInfo name="item" mandatory=true/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
 	<#elseif typeInfo.class.simpleName == "MapInfo">
 		<#-- map -->
 		<xsd:element name="${name}" minOccurs="0" maxOccurs="unbounded">
