@@ -49,6 +49,7 @@ tokens {
  ORGANISATION;
  NAMESPACE_PREFIX;
  ORGANISATION_DOMAIN_NAME;
+ ENUM_PARAMS;
 }
 
 // What package should the generated source exist in?
@@ -130,10 +131,13 @@ typeDefinition
 	CLOSE_CURLY -> ^(ID parameterList? descriptionAnnotation* sinceAnnotation* parameterAnnotation*);
 
 enumeration
-	:	ENUMERATION_STR ID OPEN_BRACKET ID (COMMA ID)* CLOSE_BRACKET OPEN_CURLY
+	:	ENUMERATION_STR ID enumerationValues OPEN_CURLY
 			(descriptionAnnotation | valueAnnotation | sinceAnnotation)*
 		CLOSE_CURLY
-		-> ^(ENUMERATION ID descriptionAnnotation* valueAnnotation* sinceAnnotation*);
+		-> ^(ENUMERATION ID descriptionAnnotation* valueAnnotation* sinceAnnotation* enumerationValues+);
+
+enumerationValues :  OPEN_BRACKET ID (COMMA ID)* CLOSE_BRACKET -> ^(ENUM_PARAMS ID+);
+
 
 typeName 	:	( 	OPEN_LIST typeName CLOSE_COLLECTION -> ^(LIST typeName) |
 					OPEN_SET typeName CLOSE_COLLECTION -> ^(SET typeName) |

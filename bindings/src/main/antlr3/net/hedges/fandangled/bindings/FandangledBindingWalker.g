@@ -222,10 +222,28 @@ enumeration returns [Enumeration enumeration]
 			(descriptionAnnotation{$enumeration.setDescription($descriptionAnnotation.description);})*
 			(valueAnnotation{$enumeration.getValues().add($valueAnnotation.value);})*
 			(sinceAnnotation{$enumeration.setSince($sinceAnnotation.since);})*
+			(enumerationValues[$enumeration.getValues()])+
 		)
 	{
 		$enumeration.setName($ID.text);
 	};
+
+enumerationValues [List<Value> values] :
+    ^(ENUM_PARAMS (ID{
+        boolean found = false;
+        for(Value value : values){
+            if(value.getName().equals($ID.text)){
+                found = true;
+                break;
+            }
+        }
+        if(!found){
+            Value v = new Value();
+            v.setName($ID.text);
+            values.add(v);
+        }
+    })+)
+;
 		
 typeName returns [TypeInfo typeInfo]
  	:	( 	  ^(collection=LIST contained=typeName) {
