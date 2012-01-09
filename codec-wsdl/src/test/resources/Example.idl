@@ -81,7 +81,7 @@ interface Example exposes Foobar {
 		@parameter firstname,	"the first name of the customer";
 	}
 	
-	type Product(mandatory string guid, list<list<Test>> dumb, list<map<int,string>> silly, list<map<string,set<Customer>>> stupid){
+	type Product(mandatory list<Test> guid, list<list<Test>> dumb, list<map<int,string>> silly, list<map<string,set<Customer>>> stupid){
 		@description "A product";
 		@parameter guid, "the guid";
 		@parameter dumb, "o...k...";

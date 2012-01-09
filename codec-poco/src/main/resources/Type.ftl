@@ -15,10 +15,16 @@ using System;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 
-namespace ${interface.serviceName}.${interface.name}
+<#if interface.namespacePrefix??>
+<#assign nsp = '${interface.namespacePrefix?capitalize}.'/>
+<#else>
+<#assign nsp = ''/>
+</#if>
+
+namespace ${interface.organisation}.${nsp}${interface.serviceName}.${interface.name}.Domain
 {
     [DataContract(Namespace = Constants.Namespace)]
-    public class ${type.name}
+    public class ${type.name} <#if type.class.name == 'Exception'>: System.Exception </#if>
     {
         <#list type.parameters as parameter>
         [DataMemeber] public <@typeMac typeInfo=parameter.typeInfo/> ${parameter.name?cap_first} {get; private set;}

@@ -20,12 +20,16 @@ import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import net.hedges.fandangled.bindings.domain.Exception;
 import net.hedges.fandangled.bindings.domain.Interface;
 import net.hedges.fandangled.bindings.domain.Type;
 import net.hedges.fandangled.codec.commons.Codec;
 import net.hedges.fandangled.codec.commons.TranscodingException;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,20 +44,35 @@ public class PocoCodec implements Codec {
     }
 
     public void encode(Interface serviceInterface, File outputDirectory) throws TranscodingException {
-        List<Type> types = serviceInterface.getTypes();
+
         File dir = new File(outputDirectory, serviceInterface.getName());
         dir.mkdirs();
-        for(Type type: types){
-            create("Type.ftl", serviceInterface, type, new File(dir, type.getName() + ".cs"));
-        }
-    }
 
-    private void create(String templateName, Interface serviceInterface, Type type, File outputFile) throws TranscodingException {
+        List<Type> types = serviceInterface.getTypes();
+        for (Type type : types) {
+            Map<String, Object> rootMap = new HashMap<String, Object>();
+            rootMap.put("interface", serviceInterface);
+            rootMap.put("type", type);
+            create("Type.ftl", rootMap, new File(dir, type.getName() + ".cs"));
+        }
+
+        List<Exception> exceptions = serviceInterface.getExceptions();
+        for (Exception exception : exceptions) {
+            Map<String, Object> rootMap = new HashMap<String, Object>();
+            rootMap.put("interface", serviceInterface);
+            rootMap.put("type", exception);
+            create("Type.ftl", rootMap, new File(dir, exception.getName() + ".cs"));
+        }
         Map<String, Object> rootMap = new HashMap<String, Object>();
         rootMap.put("interface", serviceInterface);
-        rootMap.put("type", type);
+        create("Enumerations.ftl", rootMap, new File(dir, "Enumerations.cs"));
+
+    }
+
+    private void create(String templateName, Map<String, Object> rootMap, File outputFile) throws TranscodingException {
+
         PrintWriter out = null;
-         try {
+        try {
 
             Template template = cfg.getTemplate(templateName);
             out = new PrintWriter(new FileWriter(outputFile));
@@ -69,4 +88,6 @@ public class PocoCodec implements Codec {
             }
         }
     }
+
+
 }

@@ -40,7 +40,7 @@ public class XMLFormatter {
 			final Document document = parseXmlFile(unformattedXml);
 
 			OutputFormat format = new OutputFormat(document);
-			format.setLineWidth(180);
+			format.setLineWidth(260);
 			format.setIndenting(true);
 			format.setIndent(3);
 			Writer out = new StringWriter();
