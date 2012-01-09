@@ -50,6 +50,9 @@ preambleAnnotation : (    ownerAnnotation {_interface.setOwner($ownerAnnotation.
 						| authorAnnotation {_interface.getAuthors().add($authorAnnotation.author);}
 						| versionAnnotation {_interface.setVersion($versionAnnotation.version);}
 						| descriptionAnnotation {_interface.setDescription($descriptionAnnotation.description);}
+						| organisationAnnotation {_interface.setOrganisation($organisationAnnotation.organisation);}
+						| namespacePrefixAnnotation {_interface.setNamespacePrefix($namespacePrefixAnnotation.namespacePrefix);}
+						| organisationDomainNameAnnotation {_interface.setOrganisationDomainName($organisationDomainNameAnnotation.organisationDomainName);}
 					  );
 
 fandangledVersionAnnotation
@@ -88,6 +91,24 @@ descriptionAnnotation returns [String description]
 		: ^(DESC STRING_LITERAL)
 		{
 			$description = $STRING_LITERAL.text;		
+		};
+
+organisationAnnotation returns [String organisation]
+		: ^(ORGANISATION STRING_LITERAL)
+		{
+			$organisation = $STRING_LITERAL.text;
+		};
+
+namespacePrefixAnnotation returns [String namespacePrefix]
+		: ^(NAMESPACE_PREFIX STRING_LITERAL)
+		{
+			$namespacePrefix = $STRING_LITERAL.text;
+		};
+
+organisationDomainNameAnnotation returns [String organisationDomainName]
+		: ^(ORGANISATION_DOMAIN_NAME STRING_LITERAL)
+		{
+			$organisationDomainName = $STRING_LITERAL.text;
 		};
 		
 parameterAnnotation [Map<String, Parameter> parameters] returns [Parameter parameter]

@@ -1,19 +1,4 @@
-/*
-   Copyright 2010 Andy Hedges <andy@hedges.net>
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-*/
-@fandangled 0.0.1;
+@fandangled 0.0.1; // version of Fandangled
 interface Example exposes Foobar {
 
 	/*Primatives are
@@ -36,10 +21,15 @@ interface Example exposes Foobar {
 	@owner "Andy Hedges", "andy@hedges.net";
 	@author "Joe Bloggs", "joe.bloggs@blogger.com";
 	@author "Jane Bloggs", "jane.bloggs@blogger.com";
+	@organisation "Acme";
+	@organisationDomainName "example.com";
+	@namespacePrefix "service";
 	@version 1.1.1;
 
-	@description "This is an example interface this description can be in any format we like
-		with return characters. We defined the begin and end how";
+	@description "This is an example interface; this description can be in any format we like
+		with return characters and so on. We defined the begin and end how?
+
+		blank line before";
 
 	
 	Customer retrieveCustomer(mandatory string guid) throws CustomerNotFoundException, SomeOtherException {
@@ -94,6 +84,7 @@ interface Example exposes Foobar {
 	type Product(mandatory string guid, list<list<Test>> dumb, list<map<int,string>> silly, list<map<string,set<Customer>>> stupid){
 		@description "A product";
 		@parameter guid, "the guid";
+		@parameter dumb, "o...k...";
 		@parameter silly, "hummm";
 		@parameter stupid, "why does it even allow this?";
 	}
@@ -123,6 +114,7 @@ interface Example exposes Foobar {
 	}
 	
 	enumeration Something (A, B, C) {
+		@description "Something enum";
 		@value A;
 		@value B;
 		@value C, "C";

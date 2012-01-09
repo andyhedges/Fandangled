@@ -46,6 +46,9 @@ tokens {
  RETURN;
  VALUE;
  FANDANGLED;
+ ORGANISATION;
+ NAMESPACE_PREFIX;
+ ORGANISATION_DOMAIN_NAME;
 }
 
 // What package should the generated source exist in?
@@ -73,6 +76,9 @@ preambleAnnotation : (    ownerAnnotation
 						| authorAnnotation
 						| versionAnnotation
 						| descriptionAnnotation
+						| organisationAnnotation
+						| namespacePrefixAnnotation
+						| organisationDomainNameAnnotation
 					  );
 
 structure :
@@ -84,16 +90,19 @@ structure :
 		| enumeration
 		);
 
-fandangledVersionAnnotation : '@fandangled' VERSION SEMICOLON -> ^(FANDANGLED VERSION);
-ownerAnnotation			: '@owner' STRING_LITERAL COMMA STRING_LITERAL SEMICOLON -> ^(OWNER STRING_LITERAL STRING_LITERAL);
-authorAnnotation		: '@author' STRING_LITERAL COMMA STRING_LITERAL SEMICOLON -> ^(AUTHOR STRING_LITERAL STRING_LITERAL);
-versionAnnotation		: '@version' VERSION SEMICOLON -> ^(VERS VERSION);
-descriptionAnnotation	: '@description' STRING_LITERAL SEMICOLON -> ^(DESC STRING_LITERAL);
-parameterAnnotation		: '@parameter' ID COMMA STRING_LITERAL SEMICOLON -> ^(PARAM ID STRING_LITERAL);
-exceptionAnnotation		: '@exception' ID COMMA STRING_LITERAL SEMICOLON -> ^(EXCEPT ID STRING_LITERAL);
-sinceAnnotation			: '@since' VERSION SEMICOLON -> ^(SINCE VERSION);
-returnAnnotation		: '@return' STRING_LITERAL SEMICOLON -> ^(RETURN STRING_LITERAL);
-valueAnnotation			: '@value' ID (COMMA STRING_LITERAL)? SEMICOLON  -> ^(VALUE ID STRING_LITERAL?);
+fandangledVersionAnnotation         : '@fandangled' VERSION SEMICOLON -> ^(FANDANGLED VERSION);
+organisationAnnotation              : '@organisation' STRING_LITERAL SEMICOLON -> ^(ORGANISATION STRING_LITERAL);
+namespacePrefixAnnotation           : '@namespacePrefix' STRING_LITERAL SEMICOLON -> ^(NAMESPACE_PREFIX STRING_LITERAL);
+organisationDomainNameAnnotation    : '@organisationDomainName' STRING_LITERAL SEMICOLON -> ^(ORGANISATION_DOMAIN_NAME STRING_LITERAL);
+ownerAnnotation		               	: '@owner' STRING_LITERAL COMMA STRING_LITERAL SEMICOLON -> ^(OWNER STRING_LITERAL STRING_LITERAL);
+authorAnnotation        		    : '@author' STRING_LITERAL COMMA STRING_LITERAL SEMICOLON -> ^(AUTHOR STRING_LITERAL STRING_LITERAL);
+versionAnnotation       	    	: '@version' VERSION SEMICOLON -> ^(VERS VERSION);
+descriptionAnnotation              	: '@description' STRING_LITERAL SEMICOLON -> ^(DESC STRING_LITERAL);
+parameterAnnotation     	    	: '@parameter' ID COMMA STRING_LITERAL SEMICOLON -> ^(PARAM ID STRING_LITERAL);
+exceptionAnnotation	            	: '@exception' ID COMMA STRING_LITERAL SEMICOLON -> ^(EXCEPT ID STRING_LITERAL);
+sinceAnnotation     		    	: '@since' VERSION SEMICOLON -> ^(SINCE VERSION);
+returnAnnotation        	    	: '@return' STRING_LITERAL SEMICOLON -> ^(RETURN STRING_LITERAL);
+valueAnnotation     		    	: '@value' ID (COMMA STRING_LITERAL)? SEMICOLON  -> ^(VALUE ID STRING_LITERAL?);
 
 
 operation

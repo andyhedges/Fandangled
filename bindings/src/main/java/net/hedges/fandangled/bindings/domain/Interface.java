@@ -27,6 +27,9 @@ public class Interface {
 	private Owner owner;
 	private Version version;
 	private String description;
+    private String organisation;
+	private String namespacePrefix;
+    private String organisationDomainName;
 	private List<Operation> operations = new ArrayList<Operation>();
 	private List<Event> events = new ArrayList<Event>();
 	private List<Type> types = new ArrayList<Type>();
@@ -127,5 +130,29 @@ public class Interface {
 
     public void setMetadata(Metadata metadata) {
         this.metadata = metadata;
+    }
+
+    public String getOrganisation() {
+        return organisation;
+    }
+
+    public void setOrganisation(String organisation) {
+        this.organisation = organisation;
+    }
+
+    public String getNamespacePrefix() {
+        return namespacePrefix;
+    }
+
+    public void setNamespacePrefix(String namespacePrefix) {
+        this.namespacePrefix = namespacePrefix;
+    }
+
+    public String getOrganisationDomainName() {
+        return organisationDomainName;
+    }
+
+    public void setOrganisationDomainName(String organisationDomainName) {
+        this.organisationDomainName = organisationDomainName;
     }
 }

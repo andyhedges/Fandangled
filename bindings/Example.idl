@@ -21,6 +21,9 @@ interface Example exposes Foobar {
 	@owner "Andy Hedges", "andy@hedges.net";
 	@author "Joe Bloggs", "joe.bloggs@blogger.com";
 	@author "Jane Bloggs", "jane.bloggs@blogger.com";
+	@organisation "Acme";
+	@organisationDomainName "example.com";
+	@namespacePrefix "service";
 	@version 1.1.1;
 
 	@description "This is an example interface; this description can be in any format we like
@@ -81,6 +84,7 @@ interface Example exposes Foobar {
 	type Product(mandatory string guid, list<list<Test>> dumb, list<map<int,string>> silly, list<map<string,set<Customer>>> stupid){
 		@description "A product";
 		@parameter guid, "the guid";
+		@parameter dumb, "o...k...";
 		@parameter silly, "hummm";
 		@parameter stupid, "why does it even allow this?";
 	}
@@ -110,6 +114,7 @@ interface Example exposes Foobar {
 	}
 	
 	enumeration Something (A, B, C) {
+		@description "Something enum";
 		@value A;
 		@value B;
 		@value C, "C";

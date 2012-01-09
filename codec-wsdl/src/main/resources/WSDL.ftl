@@ -23,19 +23,24 @@
  					"float":"xsd:float",
  					"double":"xsd:double",
  					"string":"xsd:string",
- 					"datetime":"xsd:integer"}
+ 					"datetime":"xsd:dateTime"}
  	
  	>
-<wsdl:definitions name="EndorsementSearch"
-  targetNamespace="http://example.com/namespace/"
-  xmlns:tns="http://example.com/namespace/"
-  xmlns:domain="http://example.com/namespace/domain/"
+ 	<#if namespacePrefix??>
+ 	<#assign nsp = '${namespacePrefix?lower_case}.'/>
+ 	<#else>
+ 	<#assign nsp = ''/>
+ 	</#if>
+<wsdl:definitions name="${name}"
+  targetNamespace="http://${nsp}${organisationDomainName?lower_case}/${serviceName}/${name}"
+  xmlns:tns="http://${nsp}${organisationDomainName?lower_case}/${serviceName}/${name}"
+  xmlns:domain="http://${nsp}${organisationDomainName?lower_case}/domain/${serviceName}/${name}"
   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   
 	  <wsdl:types>
 	  
-	      <xsd:schema targetNamespace="http://example.com/namespace/domain/" xmlns="http://example.com/namespace/domain/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	      <xsd:schema targetNamespace="http://${nsp}${organisationDomainName?lower_case}/domain/${serviceName}/${name}" xmlns="http://${nsp}${organisationDomainName?lower_case}/domain/${serviceName}/${name}" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	      
 		      <#list types as type>
 					<xsd:complexType name="${type.name}">
@@ -144,7 +149,7 @@
 	 	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
 	  	<#list operations as operation>
 	  		<wsdl:operation name="${operation.name}">
-				<soap:operation soapAction="http://example.com/${operation.name}"/>
+				<soap:operation soapAction="http://${nsp}${organisationDomainName?lower_case}/${serviceName}/${name}/${operation.name}"/>
 				<wsdl:input>
 					<soap:body use="literal"/>
 				</wsdl:input>
