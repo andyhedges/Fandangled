@@ -39,7 +39,14 @@ import javax.swing.border.TitledBorder;
 
 import net.hedges.fandangled.bindings.builder.InterfaceBuilder;
 import net.hedges.fandangled.bindings.domain.Interface;
+import net.hedges.fandangled.codec.commons.Codec;
 import net.hedges.fandangled.codec.docx.DocxCodec;
+import net.hedges.fandangled.codec.poco.PocoCodec;
+import net.hedges.fandangled.codec.wsdl.WsdlCodec;
+
+import javax.swing.JLabel;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class Main extends JFrame {
 
@@ -71,6 +78,7 @@ public class Main extends JFrame {
 	private final Action clearAction = new ClearAction();
 	private final Action saveAction = new SaveAction();
 	private JProgressBar generateProgress;
+	private JComboBox codecChooser;
 
 	public Main() {
 		setTitle("Fandangled Extremely Basic GUI");
@@ -168,23 +176,28 @@ public class Main extends JFrame {
 		generateProgress.setIndeterminate(true);
 		generateProgress.setString("generating…");
 		generateProgress.setVisible(false);
+		
+		codecChooser = new JComboBox();
+		codecChooser.setModel(new DefaultComboBoxModel(new String[] {"WSDL", "DOCX", "POCO"}));
 		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
 		gl_panel_3.setHorizontalGroup(
 			gl_panel_3.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel_3.createSequentialGroup()
-					.addContainerGap(340, Short.MAX_VALUE)
-					.addComponent(generateProgress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addComponent(generateProgress, GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(codecChooser, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(generate))
 		);
 		gl_panel_3.setVerticalGroup(
 			gl_panel_3.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_3.createSequentialGroup()
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGroup(gl_panel_3.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(generateProgress, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(generate, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addContainerGap())
+				.addGroup(Alignment.LEADING, gl_panel_3.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
+						.addComponent(generateProgress, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+						.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
+							.addComponent(codecChooser)
+							.addComponent(generate, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
 		);
 		panel_3.setLayout(gl_panel_3);
 	}
@@ -284,7 +297,16 @@ public class Main extends JFrame {
 	
 	private  void generate(File file) {
 		try {
-			DocxCodec codec = new DocxCodec();
+			String value = codecChooser.getSelectedItem().toString();
+			Codec codec = null;
+			if(value.equals("DOCX")){
+				codec = new DocxCodec();
+			} else if(value.equals("WSDL")){
+				codec = new WsdlCodec();
+			} else if(value.equals("POCO")){
+				codec = new PocoCodec();
+			}
+			
 			ByteArrayInputStream in = new ByteArrayInputStream(editor.getText()
 					.getBytes());
 			Interface interf = InterfaceBuilder.parse(in);
