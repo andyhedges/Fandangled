@@ -27,15 +27,16 @@ namespace ${interface.organisation}.${nsp}${interface.serviceName}.${interface.n
     public class ${type.name} <#if type.class.name == 'Exception'>: System.Exception </#if>
     {
         <#list type.parameters as parameter>
-        [DataMemeber] public <@typeMac typeInfo=parameter.typeInfo/> ${parameter.name?cap_first} {get; private set;}
+        [DataMember] public <@typeMac typeInfo=parameter.typeInfo/> ${parameter.name?cap_first} {get; private set;}
         </#list>
-    }
 
-    public ${type.name} (<#list type.parameters as parameter><@typeMac typeInfo=parameter.typeInfo/> ${parameter.name?cap_first}<#if parameter_has_next>, </#if></#list>)
-    {
-        <#list type.parameters as parameter>
-        ${parameter.name?cap_first} = ${parameter.name?uncap_first};
-        </#list>
+
+        public ${type.name} (<#list type.parameters as parameter><@typeMac typeInfo=parameter.typeInfo/> ${parameter.name}<#if parameter_has_next>, </#if></#list>)
+        {
+            <#list type.parameters as parameter>
+            ${parameter.name?cap_first} = ${parameter.name?uncap_first};
+            </#list>
+        }
     }
 }
 

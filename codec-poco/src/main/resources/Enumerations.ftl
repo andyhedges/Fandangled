@@ -6,6 +6,8 @@ using System;
 <#assign nsp = ''/>
 </#if>
 
+
+
 namespace ${interface.organisation}.${nsp}${interface.serviceName}.${interface.name}.Domain
 {
     <#list interface.enumerations as enumeration>
