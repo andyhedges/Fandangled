@@ -42,7 +42,9 @@
   
 	  <wsdl:types>
 	  
-	      <xsd:schema targetNamespace="http://${nsp}${organisationDomainName?lower_case}/domain/${serviceName}/${name}" xmlns="http://${nsp}${organisationDomainName?lower_case}/domain/${serviceName}/${name}" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	      <xsd:schema targetNamespace="http://${nsp}${organisationDomainName?lower_case}/domain/${serviceName}/${name}"
+	        xmlns="http://${nsp}${organisationDomainName?lower_case}/domain/${serviceName}/${name}"
+	        xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 	      
 		      <#list types as type>
 					<xsd:complexType name="${type.name}">
