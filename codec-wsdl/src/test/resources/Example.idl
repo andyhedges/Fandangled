@@ -32,10 +32,10 @@ interface Example exposes Foobar {
 		blank line before";
 
 	
-	Customer retrieveCustomer(mandatory string guid) throws CustomerNotFoundException, SomeOtherException {
+	list<Customer> retrieveCustomers(mandatory list<string> guids) throws CustomerNotFoundException, SomeOtherException {
 		@description "an operation that returns a customer for a given guid";
 		@return "the customer that we wanted to retrieve";
-		@parameter guid, "the guid of the customer that we want to retrieve";
+		@parameter guids, "the guid of the customer that we want to retrieve";
 		@exception CustomerNotFoundException, "when the customer isn't found";
 		@exception SomeOtherException, "something else has gone wrong";
 		@since 1.0.1;
@@ -51,6 +51,12 @@ interface Example exposes Foobar {
 			by quotes to specify multi word phrased such as description:\"men's bikes\"";
 		@parameter start, "for pagination, the first return to be contained in the return list";
 		@parameter length, "the number of results returned in the list";
+	}
+	
+	void madeUpOperation(list<Test> tests){
+		@description "made up test";
+		@since 0.0.0;
+		@parameter tests, "the products";	
 	}
 	
 	async void updateIndex (){
