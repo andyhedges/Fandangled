@@ -23,11 +23,11 @@ using System.Collections.Generic;
 
 namespace ${interface.organisation}.${nsp}${interface.serviceName}.${interface.name}.Domain
 {
-    [DataContract(Namespace = Constants.Namespace)]
+
     public class ${type.name} <#if type.class.name == 'Exception'>: System.Exception </#if>
     {
         <#list type.parameters as parameter>
-        [DataMember] public <@typeMac typeInfo=parameter.typeInfo/> ${parameter.name?cap_first} {get; private set;}
+        public <@typeMac typeInfo=parameter.typeInfo/> ${parameter.name?cap_first} {get; private set;}
         </#list>
 
 
