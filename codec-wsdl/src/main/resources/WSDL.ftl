@@ -50,7 +50,7 @@
 					<xsd:complexType name="${type.name}">
 						<xsd:sequence>
 						<#list type.parameters as parameter>
-							<@typeMac typeInfo=parameter.typeInfo name=parameter.name mandatory=parameter.mandatory/>
+							<@typeMac typeInfo=parameter.typeInfo name=parameter.name mandatory=parameter.mandatory  many=false/>
 						</#list>
 						</xsd:sequence>
 					</xsd:complexType>
@@ -72,7 +72,7 @@
 				    <xsd:complexType>
                         <xsd:sequence>
                             <#list operation.parameters as parameter>
-                                <@typeMac typeInfo=parameter.typeInfo name=parameter.name mandatory=parameter.mandatory/>
+                                <@typeMac typeInfo=parameter.typeInfo name=parameter.name mandatory=parameter.mandatory many=false/>
                             </#list>
                         </xsd:sequence>
 					</xsd:complexType>
@@ -82,7 +82,7 @@
 					<xsd:element name="${operation.name?cap_first}Out">
 					    <xsd:complexType>
                             <xsd:sequence>
-                                <@typeMac typeInfo=operation.return.typeInfo name="return" mandatory=true/>
+                                <@typeMac typeInfo=operation.return.typeInfo name="return" mandatory=true many=false/>
                             </xsd:sequence>
 						</xsd:complexType>
 					</xsd:element>
@@ -95,7 +95,7 @@
 						<xsd:sequence>
 							<#list exception.parameters as parameter>
 								<xsd:sequence>
-									<@typeMac typeInfo=parameter.typeInfo name=parameter.name  mandatory=parameter.mandatory/>
+									<@typeMac typeInfo=parameter.typeInfo name=parameter.name  mandatory=parameter.mandatory many=false/>
 								</xsd:sequence>						
 							</#list>
 						</xsd:sequence>
@@ -177,26 +177,26 @@
   </wsdl:definitions>
  
  
- <#macro typeMac typeInfo name mandatory>
+ <#macro typeMac typeInfo name mandatory many>
 	<#if typeInfo.class.simpleName == "TypeInfo">
 	    <#-- single type -->
-		<xsd:element name="${name}" type="${primitives[typeInfo.typeName]!typeInfo.typeName}" <@cardinality mandatory/>/>
+		<xsd:element name="${name}" type="${primitives[typeInfo.typeName]!typeInfo.typeName}" <@cardinality mandatory many/>/>
 	<#elseif typeInfo.class.simpleName == "CollectionInfo">
 	    <#-- collection -->
-        <xsd:element name="${name}" minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="${name}" <@cardinality mandatory false/>>
             <xsd:complexType>
                 <xsd:sequence>
-                    <@typeMac typeInfo=typeInfo.containedTypeInfo name="item" mandatory=true/>
+                    <@typeMac typeInfo=typeInfo.containedTypeInfo name="item" mandatory=true many=true/>
                 </xsd:sequence>
             </xsd:complexType>
         </xsd:element>
 	<#elseif typeInfo.class.simpleName == "MapInfo">
 		<#-- map -->
-		<xsd:element name="${name}" minOccurs="0" maxOccurs="unbounded">
+		<xsd:element name="${name}" <@cardinality mandatory true/>>
             <xsd:complexType>
                 <xsd:sequence>
-                    <@typeMac typeInfo=typeInfo.containedNameTypeInfo name="name" mandatory=true/>
-                    <@typeMac typeInfo=typeInfo.containedValueTypeInfo name="value" mandatory=true/>
+                    <@typeMac typeInfo=typeInfo.containedNameTypeInfo name="name" mandatory=true many=false/>
+                    <@typeMac typeInfo=typeInfo.containedValueTypeInfo name="value" mandatory=true many=false/>
                 </xsd:sequence>
             </xsd:complexType>
 		</xsd:element>
@@ -204,10 +204,15 @@
  	
  </#macro>
 
- <#macro cardinality mandatory>
+ <#macro cardinality mandatory many>
     <#if mandatory?? && mandatory>
-        minOccurs="1" maxOccurs="1"
+        minOccurs="1"
     <#else>
-        minOccurs="0" maxOccurs="1"
+        minOccurs="0"
+    </#if>
+    <#if many?? && many>
+        maxOccurs="unbounded"
+    <#else>
+        maxOccurs="1"
     </#if>
  </#macro>
