@@ -26,7 +26,6 @@
         <module>codec-commons</module>
         <module>codec-wsdl</module>
         <module>codec-docx</module>
-        <module>codec-xsd</module>
     <module>command-line</module>
     <module>basic-gui</module>
     <module>codec-poco</module>
