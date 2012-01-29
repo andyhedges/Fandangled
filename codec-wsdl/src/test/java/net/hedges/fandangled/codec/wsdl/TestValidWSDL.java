@@ -45,7 +45,7 @@ public class TestValidWSDL extends TestCase {
         wsdlCodec.encode(_interface, new File("target"));
 
         ///validate with wsdl4j fwiw doesn't seem to complain about much
-        File loc = new File("target", _interface.getName() + "-interface.wsdl");
+        File loc = new File("target", _interface.getName() + "-interface-" + _interface.getVersion().getValue() + ".wsdl");
         WSDLFactory factory = WSDLFactory.newInstance();
         WSDLReader wsdlReader = factory.newWSDLReader();
         Definition def = wsdlReader.readWSDL(null, loc.toURI().toString());
@@ -58,6 +58,13 @@ public class TestValidWSDL extends TestCase {
         System.out.println(outputDir.toString());
         deleteDir(outputDir);//'cos there isn't one in Java yet
 
+    }
+
+    public void testXSD() throws Exception {
+        Codec wsdlCodec = new WsdlCodec(true);
+        String example = wsdlCodec.getClass().getClassLoader().getResource("Example.idl").getFile();
+        Interface _interface = InterfaceBuilder.parse(example);
+        wsdlCodec.encode(_interface, new File("target"));
     }
 
     public static boolean deleteDir(File dir) {

@@ -47,12 +47,6 @@
 			<version>0.0.1-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>net.hedges.fandangled</groupId>
-			<artifactId>codec-xsd</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>compile</scope>
-		</dependency>
  		<dependency>
 			<groupId>net.hedges.fandangled</groupId>
 			<artifactId>codec-wsdl</artifactId>

@@ -171,14 +171,14 @@ public class Main extends JFrame {
 
 		JButton generate = new JButton("Generate");
 		generate.setAction(generateAction);
-		
+
 		generateProgress = new JProgressBar();
 		generateProgress.setIndeterminate(true);
 		generateProgress.setString("generating…");
 		generateProgress.setVisible(false);
-		
+
 		codecChooser = new JComboBox();
-		codecChooser.setModel(new DefaultComboBoxModel(new String[] {"WSDL", "DOCX", "POCO"}));
+		codecChooser.setModel(new DefaultComboBoxModel(new String[] {"XSD", "WSDL", "DOCX", "POCO"}));
 		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
 		gl_panel_3.setHorizontalGroup(
 			gl_panel_3.createParallelGroup(Alignment.TRAILING)
@@ -264,7 +264,7 @@ public class Main extends JFrame {
 							"This is not a directory", "Not a directory",
 							JOptionPane.ERROR_MESSAGE);
 				}
-				
+
 				SwingWorker<Void, Void> sw = new GenerateWorker(file);
 				sw.execute();
 			}
@@ -272,13 +272,13 @@ public class Main extends JFrame {
 	}
 
 	private class GenerateWorker extends SwingWorker<Void, Void>{
-		
+
 		private File file = null;
 
 		public GenerateWorker(File file){
 			this.file = file;
 		}
-		
+
 		@Override
 		protected Void doInBackground() throws Exception {
 			Main.this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -288,25 +288,27 @@ public class Main extends JFrame {
 			Main.this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 			return null;
 		}
-		
+
 		protected void done(){
 			generateProgress.setVisible(false);
 		}
-		
+
 	}
-	
+
 	private  void generate(File file) {
 		try {
 			String value = codecChooser.getSelectedItem().toString();
 			Codec codec = null;
-			if(value.equals("DOCX")){
+            if(value.equals("XSD")){
+				codec = new WsdlCodec(true);
+			} else if(value.equals("DOCX")){
 				codec = new DocxCodec();
 			} else if(value.equals("WSDL")){
 				codec = new WsdlCodec();
 			} else if(value.equals("POCO")){
 				codec = new PocoCodec();
 			}
-			
+
 			ByteArrayInputStream in = new ByteArrayInputStream(editor.getText()
 					.getBytes());
 			Interface interf = InterfaceBuilder.parse(in);
@@ -336,7 +338,7 @@ public class Main extends JFrame {
 			} catch(IOException ioe){
 				JOptionPane.showMessageDialog(Main.this,
 						"Couldn't save file", "Couldn't save file",
-						JOptionPane.ERROR_MESSAGE);	
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

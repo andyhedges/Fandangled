@@ -15,26 +15,68 @@
 */
 package net.hedges.fandangled.codec.wsdl;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
-import net.hedges.fandangled.bindings.domain.Interface;
-import net.hedges.fandangled.codec.commons.AbstractFreemarkerCodec;
-import net.hedges.fandangled.codec.commons.Codec;
-import net.hedges.fandangled.codec.commons.TranscodingException;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import net.hedges.fandangled.bindings.domain.Interface;
+import net.hedges.fandangled.codec.commons.Codec;
+import net.hedges.fandangled.codec.commons.TranscodingException;
 import net.hedges.fandangled.codec.commons.XMLFormatter;
 
-public class WsdlCodec extends AbstractFreemarkerCodec {
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
-    @Override
+public class WsdlCodec implements Codec {
+
+    private boolean xsdOnly = false;
+
+    public WsdlCodec() {
+
+    }
+
+    public WsdlCodec(boolean xsdOnly) {
+        this.xsdOnly = xsdOnly;
+    }
+
     protected String getTemplateName() {
         return "WSDL.ftl";
+    }
+
+    public void encode(Interface serviceInterface, File outputDirectory)
+            throws TranscodingException {
+
+        PrintWriter out = null;
+
+        try {
+            Configuration cfg = new Configuration();
+            cfg.setObjectWrapper(new DefaultObjectWrapper());
+            cfg.setClassForTemplateLoading(this.getClass(), "/");
+            Template wsdl = cfg.getTemplate(getTemplateName());
+            if (xsdOnly) {
+                out = new PrintWriter(new FileWriter(new File(outputDirectory,
+                        serviceInterface.getName() + "-interface-" + serviceInterface.getVersion().getValue() + ".xsd")));
+            } else {
+                out = new PrintWriter(new FileWriter(new File(outputDirectory,
+                        serviceInterface.getName() + "-interface-" + serviceInterface.getVersion().getValue() + ".wsdl")));
+            }
+            StringWriter proxy = new StringWriter();
+
+            Map<String, Object> root = new HashMap<String, Object>();
+            root.put("interface", serviceInterface);
+            root.put("xsdOnly", xsdOnly);
+            wsdl.process(root, proxy);
+            out.println(XMLFormatter.format(proxy.toString()));
+            out.close();
+        } catch (IOException ioe) {
+            throw new TranscodingException("Transcoding Exception", ioe);
+        } catch (TemplateException te) {
+            throw new TranscodingException("Transcoding Exception", te);
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
     }
 }

@@ -28,25 +28,27 @@
  					"datetime":"xsd:dateTime"}
  	
  	>
- 	<#if namespacePrefix??>
- 	<#assign nsp = '${namespacePrefix?lower_case}.'/>
+ 	<#if interface.namespacePrefix??>
+ 	<#assign nsp = '${interface.namespacePrefix?lower_case}.'/>
  	<#else>
  	<#assign nsp = ''/>
  	</#if>
-<wsdl:definitions name="${name}"
-  targetNamespace="http://${nsp}${organisationDomainName?lower_case}/${serviceName}/${name}"
-  xmlns:tns="http://${nsp}${organisationDomainName?lower_case}/${serviceName}/${name}"
-  xmlns:domain="http://${nsp}${organisationDomainName?lower_case}/domain/${serviceName}/${name}"
+
+<#if !xsdOnly>
+<wsdl:definitions name="${interface.name}"
+  targetNamespace="http://${nsp}${interface.organisationDomainName?lower_case}/${interface.serviceName}/${interface.name}-${interface.version.value}"
+  xmlns:tns="http://${nsp}${interface.organisationDomainName?lower_case}/${interface.serviceName}/${interface.name}-${interface.version.value}"
+  xmlns:domain="http://${nsp}${interface.organisationDomainName?lower_case}/domain/${interface.serviceName}/${interface.name}-${interface.version.value}"
   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   
 	  <wsdl:types>
-	  
-	      <xsd:schema targetNamespace="http://${nsp}${organisationDomainName?lower_case}/domain/${serviceName}/${name}"
-	        xmlns="http://${nsp}${organisationDomainName?lower_case}/domain/${serviceName}/${name}"
+</#if>
+	      <xsd:schema targetNamespace="http://${nsp}${interface.organisationDomainName?lower_case}/domain/${interface.serviceName}/${interface.name}-${interface.version.value}"
+	        xmlns="http://${nsp}${interface.organisationDomainName?lower_case}/domain/${interface.serviceName}/${interface.name}-${interface.version.value}"
 	        xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 	      
-		      <#list types as type>
+		      <#list interface.types as type>
 					<xsd:complexType name="${type.name}">
 						<xsd:sequence>
 						<#list type.parameters as parameter>
@@ -56,7 +58,7 @@
 					</xsd:complexType>
 			  </#list>
 			  
-			  <#list enumerations as enumeration>
+			  <#list interface.enumerations as enumeration>
 					<xsd:simpleType name="${enumeration.name}">
 						<xsd:restriction base="xsd:string">
 							<#list enumeration.values as value>
@@ -65,8 +67,8 @@
 						</xsd:restriction>
 					</xsd:simpleType>
 			  </#list>
-			  
-			<#list operations as operation>
+
+			<#list interface.operations as operation>
 				<#if operation.parameters?has_content>
 				<xsd:element name="${operation.name?cap_first}In">
 				    <xsd:complexType>
@@ -88,15 +90,29 @@
 					</xsd:element>
 				</#if>
 			</#list>
-			
-			<#list exceptions as exception>
+
+			<#list interface.exceptions as exception>
 				<xsd:element name="${exception.name?cap_first}Fault">
 					<xsd:complexType>
 						<xsd:sequence>
 							<#list exception.parameters as parameter>
 								<xsd:sequence>
 									<@typeMac typeInfo=parameter.typeInfo name=parameter.name  mandatory=parameter.mandatory many=false/>
-								</xsd:sequence>						
+								</xsd:sequence>
+							</#list>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</#list>
+
+			<#list interface.events as event>
+				<xsd:element name="${event.name?cap_first}">
+					<xsd:complexType>
+						<xsd:sequence>
+							<#list event.parameters as parameter>
+								<xsd:sequence>
+									<@typeMac typeInfo=parameter.typeInfo name=parameter.name  mandatory=parameter.mandatory many=false/>
+								</xsd:sequence>
 							</#list>
 						</xsd:sequence>
 					</xsd:complexType>
@@ -106,10 +122,10 @@
 			<xsd:element name="empty"/>
 	      
 	      </xsd:schema>
-	  
+<#if !xsdOnly>
 	  </wsdl:types>
 	  
-	  <#list operations as operation>
+	  <#list interface.operations as operation>
 			<#if operation.parameters?has_content>
 				<wsdl:message name="${operation.name?cap_first}Request">
 					<wsdl:part name="request" element="domain:${operation.name?cap_first}In"/>
@@ -137,8 +153,8 @@
 			</#list>	
 	  </#list>
 	  
-	 <wsdl:portType name="${name}PortType">
-	  	<#list operations as operation>
+	 <wsdl:portType name="${interface.name}PortType">
+	  	<#list interface.operations as operation>
 	  		<wsdl:operation name="${operation.name}">
 				<wsdl:input message="tns:${operation.name?cap_first}Request"/>
 				<wsdl:output message="tns:${operation.name?cap_first}Response"/>
@@ -149,11 +165,11 @@
 	  	</#list>	
 	 </wsdl:portType>
 	 
-	 <wsdl:binding name="${name}Binding" type="tns:${name}PortType">
+	 <wsdl:binding name="${interface.name}Binding" type="tns:${interface.name}PortType">
 	 	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-	  	<#list operations as operation>
+	  	<#list interface.operations as operation>
 	  		<wsdl:operation name="${operation.name}">
-				<soap:operation soapAction="http://${nsp}${organisationDomainName?lower_case}/${serviceName}/${name}/${operation.name}"/>
+				<soap:operation soapAction="http://${nsp}${interface.organisationDomainName?lower_case}/${interface.serviceName}/${interface.name}/${operation.name}-${interface.version.value}"/>
 				<wsdl:input>
 					<soap:body use="literal"/>
 				</wsdl:input>
@@ -167,15 +183,15 @@
 	  	</#list>	 
 	 </wsdl:binding>
 	 
-	 <wsdl:service name="${name}ServiceInterface">
-	 	<wsdl:documentation>${description}</wsdl:documentation>
-	 	<wsdl:port name="${name}Port" binding="tns:${name}Binding">
+	 <wsdl:service name="${interface.name}ServiceInterface">
+	 	<wsdl:documentation>${interface.description}</wsdl:documentation>
+	 	<wsdl:port name="${interface.name}Port" binding="tns:${interface.name}Binding">
 	 		<soap:address location="http://set/this/programmatically"/>
 	 	</wsdl:port>
 	 </wsdl:service>
    
   </wsdl:definitions>
- 
+ </#if>
  
  <#macro typeMac typeInfo name mandatory many>
 	<#if typeInfo.class.simpleName == "TypeInfo">
@@ -186,7 +202,7 @@
         <xsd:element name="${name}" <@cardinality mandatory false/>>
             <xsd:complexType>
                 <xsd:sequence>
-                    <@typeMac typeInfo=typeInfo.containedTypeInfo name="item" mandatory=true many=true/>
+                    <@typeMac typeInfo=typeInfo.containedTypeInfo name="item" mandatory=false many=true/>
                 </xsd:sequence>
             </xsd:complexType>
         </xsd:element>
@@ -195,8 +211,8 @@
 		<xsd:element name="${name}" <@cardinality mandatory true/>>
             <xsd:complexType>
                 <xsd:sequence>
-                    <@typeMac typeInfo=typeInfo.containedNameTypeInfo name="name" mandatory=true many=false/>
-                    <@typeMac typeInfo=typeInfo.containedValueTypeInfo name="value" mandatory=true many=false/>
+                    <@typeMac typeInfo=typeInfo.containedNameTypeInfo name="name" mandatory=false many=false/>
+                    <@typeMac typeInfo=typeInfo.containedValueTypeInfo name="value" mandatory=false many=false/>
                 </xsd:sequence>
             </xsd:complexType>
 		</xsd:element>
