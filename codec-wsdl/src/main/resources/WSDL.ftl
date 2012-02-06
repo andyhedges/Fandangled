@@ -222,9 +222,9 @@
 
  <#macro cardinality mandatory many>
     <#if mandatory?? && mandatory>
-        minOccurs="1"
+        minOccurs="1" nillable="false"
     <#else>
-        minOccurs="0"
+        minOccurs="0" nillable="true"
     </#if>
     <#if many?? && many>
         maxOccurs="unbounded"
