@@ -208,11 +208,17 @@
         </xsd:element>
 	<#elseif typeInfo.class.simpleName == "MapInfo">
 		<#-- map -->
-		<xsd:element name="${name}" <@cardinality mandatory true/>>
+		<xsd:element name="${name}" <@cardinality mandatory false/>>
             <xsd:complexType>
                 <xsd:sequence>
-                    <@typeMac typeInfo=typeInfo.containedNameTypeInfo name="name" mandatory=false many=false/>
-                    <@typeMac typeInfo=typeInfo.containedValueTypeInfo name="value" mandatory=false many=false/>
+                    <xsd:element name="item" <@cardinality false true/>>
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <@typeMac typeInfo=typeInfo.containedNameTypeInfo name="name" mandatory=true many=false/>
+                                <@typeMac typeInfo=typeInfo.containedValueTypeInfo name="value" mandatory=false many=false/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
                 </xsd:sequence>
             </xsd:complexType>
 		</xsd:element>
