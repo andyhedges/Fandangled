@@ -21,11 +21,11 @@
 	<parent>
 		<artifactId>fandangled</artifactId>
 		<groupId>net.hedges.fandangled</groupId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 	<groupId>net.hedges.fandangled</groupId>
 	<artifactId>codec-docx</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>Fandangled codec-docx</name>
 	<dependencies>
 		<dependency>
@@ -43,7 +43,7 @@
 		<dependency>
 			<groupId>net.hedges.fandangled</groupId>
 			<artifactId>codec-commons</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.2-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

@@ -21,11 +21,11 @@
     <parent>
         <artifactId>fandangled</artifactId>
         <groupId>net.hedges.fandangled</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
     <groupId>net.hedges.fandangled</groupId>
     <artifactId>command-line</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>command-line</name>
     <url>http://maven.apache.org</url>
     <dependencies>
@@ -38,19 +38,19 @@
 		<dependency>
 			<groupId>net.hedges.fandangled</groupId>
 			<artifactId>bindings</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.2-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>net.hedges.fandangled</groupId>
 			<artifactId>codec-docx</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.2-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
  		<dependency>
 			<groupId>net.hedges.fandangled</groupId>
 			<artifactId>codec-wsdl</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.2-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
     </dependencies>

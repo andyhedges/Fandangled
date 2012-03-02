@@ -19,12 +19,12 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<artifactId>codec-commons</artifactId>
 	<modelVersion>4.0.0</modelVersion>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>Fandangled codec-commons</name>
 	<parent>
 		<artifactId>fandangled</artifactId>
 		<groupId>net.hedges.fandangled</groupId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 	<dependencies>
 		<dependency>
@@ -36,7 +36,7 @@
 		<dependency>
 			<groupId>net.hedges.fandangled</groupId>
 			<artifactId>bindings</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.2-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
