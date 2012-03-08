@@ -144,6 +144,16 @@ typeName 	:	( 	OPEN_LIST typeName CLOSE_COLLECTION -> ^(LIST typeName) |
 					OPEN_MAP typeName COMMA typeName CLOSE_COLLECTION -> ^(MAP typeName typeName)|
 					ID -> ID);
 
+document :  '"' (textRun) '"';
+
+textRun  :  (BOLD | ITALIC | UNDERLINE | TEXT);
+
+BOLD        :   '*' TEXT '*';
+ITALIC      :   '/' TEXT '/';
+UNDERLINE   :   '_' TEXT '_';
+
+fragment TEXT : ('a'..'z' | 'A'..'Z'| '0'..'9' | '_' | ' ')*;
+
 fragment parameter
 	: 	MANDATORY? typeName ID -> ^(PARAMETER typeName ID MANDATORY?);
 
