@@ -1,29 +1,31 @@
 grammar FandangledMarkup;
 
-
 options {
-
    language=Java;  // Default
    output=AST;
    ASTLabelType=CommonTree;
 }
 
-// What package should the generated source exist in?
-//
 @header {
     package net.hedges.fandangled.bindings;
 }
 
 @lexer::header {
 	package net.hedges.fandangled.bindings;
-	import net.hedges.fandangled.bindings.builder.StringUtils;
-	import java.io.*;
 }
 
-document :  LITERAL_DELIM (WORD SPACE?)* LITERAL_DELIM;
+document 
+	:	LITERAL_DELIM (paragraph PARAGRAPH_BREAK)? paragraph LITERAL_DELIM;
 
-WORD 	:	 (~(SPACE|LITERAL_DELIM))*;
+paragraph :  (WORD SPACE?)+;
 
-LITERAL_DELIM : '"';
+WORD 	:	 CHARACTER+;
 
-SPACE : (' ' | '\t' | '\r' | '\n');
+fragment CHARACTER 
+	:	 ('a'..'z' | 'A'..'Z' | '0'..'9' | '.');
+
+LITERAL_DELIM : '\"';
+
+PARAGRAPH_BREAK : '\n\n';
+
+SPACE : (' ' | '\t' | '\r');

@@ -19,3 +19,10 @@ gunit FandangledMarkup;
 
 WORD:
     "word" OK
+    "not ok" FAIL
+
+paragraph:
+    "this should be OK" OK
+    "this should also be OK." OK
+
+

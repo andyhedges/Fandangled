@@ -19,6 +19,33 @@ public class TestFandangledMarkup extends gUnitBaseTest {
 		assertEquals("testing rule "+"WORD", expecting, actual);
 	}
 
+	public void testWORD2() throws Exception {
+		// test input: "not ok"
+		Object retval = execLexer("WORD", "not ok", false);
+		Object actual = examineExecResult(org.antlr.gunit.gUnitParser.FAIL, retval);
+		Object expecting = "FAIL";
+
+		assertEquals("testing rule "+"WORD", expecting, actual);
+	}
+
+	public void testParagraph1() throws Exception {
+		// test input: "this should be OK"
+		Object retval = execParser("paragraph", "this should be OK", false);
+		Object actual = examineExecResult(org.antlr.gunit.gUnitParser.OK, retval);
+		Object expecting = "OK";
+
+		assertEquals("testing rule "+"paragraph", expecting, actual);
+	}
+
+	public void testParagraph2() throws Exception {
+		// test input: "this should also be OK."
+		Object retval = execParser("paragraph", "this should also be OK.", false);
+		Object actual = examineExecResult(org.antlr.gunit.gUnitParser.OK, retval);
+		Object expecting = "OK";
+
+		assertEquals("testing rule "+"paragraph", expecting, actual);
+	}
+
 
 
 }
