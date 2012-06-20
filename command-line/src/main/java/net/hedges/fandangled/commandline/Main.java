@@ -32,6 +32,7 @@ public class Main {
     public static void main(String[] args) {
         if (args.length != 4 || !args[0].equals("-t")) {
             usage();
+            System.exit(-1);
         }
         String[] types = args[1].split(",");
         String codecClassName = null;

@@ -110,10 +110,32 @@
 								<classpath />
 								<argument>org.antlr.gunit.Interp</argument>
 								<argument>-o</argument>
-								<argument>Test.gunit</argument>
+								<argument>BindingTest.gunit</argument>
 							</arguments>
 						</configuration>
 					</execution>
+                    <execution>
+                        <id>gunit-two</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <classpathScope>test</classpathScope>
+                            <executable>java</executable>
+                            <testSourceRoot>src/test/gunit/</testSourceRoot>
+                            <workingDirectory>src/test/gunit/</workingDirectory>
+                            <arguments>
+                                <argument>-classpath</argument>
+                                <!-- automatically creates the classpath using all project dependencies,
+                                            also adding the project build directory -->
+                                <classpath />
+                                <argument>org.antlr.gunit.Interp</argument>
+                                <argument>-o</argument>
+                                <argument>markupTest.gunit</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
 				</executions>
 			</plugin>
 
