@@ -154,6 +154,15 @@ public class TestFandangledMarkup extends gUnitBaseTest {
 		assertEquals("testing rule "+"document", expecting, actual);
 	}
 
+	public void testDocument7() throws Exception {
+		// test input: "\"Testing out \\\"quotes\\\"\""
+		Object retval = execParser("document", "\"Testing out \\\"quotes\\\"\"", false);
+		Object actual = examineExecResult(org.antlr.gunit.gUnitParser.OK, retval);
+		Object expecting = "OK";
+
+		assertEquals("testing rule "+"document", expecting, actual);
+	}
+
 
 
 }

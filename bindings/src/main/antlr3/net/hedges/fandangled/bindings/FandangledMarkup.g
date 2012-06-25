@@ -20,17 +20,23 @@ tokens {
 }
 
 document 
-	:	LITERAL_DELIM ((paragraph PARAGRAPH_BREAK)? paragraph)? LITERAL_DELIM -> ^(PARAGRAPHS paragraph*);
+	:	LITERAL_DELIM ( PARAGRAPH_BREAK? (paragraph PARAGRAPH_BREAK)* paragraph)? PARAGRAPH_BREAK? LITERAL_DELIM -> ^(PARAGRAPHS paragraph*);
 
-paragraph :  SPACE* (WORD SPACE*)+ -> ^(WORDS WORD+);
+paragraph :  SPACE* (WORD NEWLINE? SPACE*)+ -> ^(WORDS WORD+);
 
-WORD 	:	 CHARACTER+;
+WORD 	:	  (CHARACTER | '\\"')*;
 
-fragment CHARACTER 
-	:	 ('a'..'z' | 'A'..'Z' | '0'..'9' | '.');
+fragment CHARACTER : '!' | '\u0023'..'\u007F';
 
 LITERAL_DELIM : '\"';
 
-PARAGRAPH_BREAK : '\n\n';
+PARAGRAPH_BREAK : NEWLINE NEWLINE;
 
-SPACE : (' ' | '\t' | '\r' | '\n' ~'\n' | ~'\n' '\n');
+NEWLINE : '\r'? '\n';
+
+SPACE : (' ' | '\t' | '\r');
+
+
+
+
+

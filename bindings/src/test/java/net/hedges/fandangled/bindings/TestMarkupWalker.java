@@ -14,11 +14,7 @@ import net.hedges.fandangled.bindings.builder.FandangledBindingException;
 public class TestMarkupWalker extends TestCase {
 
     public void testWalker() {
-        try {
             DocumentBuilder.parse("This is a test\n\nso is this");
-        } catch (FandangledBindingException e) {
-            assertTrue("Shouldn't have thrown an exception", false);
-        }
     }
 
 }

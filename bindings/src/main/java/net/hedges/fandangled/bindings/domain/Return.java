@@ -15,10 +15,12 @@
 */
 package net.hedges.fandangled.bindings.domain;
 
+import net.hedges.fandangled.bindings.domain.document.Document;
+
 public class Return {
 
 	private TypeInfo typeInfo;
-	private String description;
+	private Document description;
 
 	public TypeInfo getTypeInfo() {
 		return typeInfo;
@@ -28,11 +30,11 @@ public class Return {
 		this.typeInfo = typeInfo;
 	}
 
-	public String getDescription() {
+	public Document getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(Document description) {
 		this.description = description;
 	}
 

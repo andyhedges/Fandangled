@@ -15,10 +15,12 @@
 */
 package net.hedges.fandangled.bindings.domain;
 
+import net.hedges.fandangled.bindings.domain.document.Document;
+
 public abstract class AbstractEntity {
 
     private String name;
-    private String description;
+    private Document description;
 
     public String getName() {
         return name;
@@ -28,11 +30,11 @@ public abstract class AbstractEntity {
         this.name = name;
     }
 
-    public String getDescription() {
+    public Document getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(Document description) {
         this.description = description;
     }
 }

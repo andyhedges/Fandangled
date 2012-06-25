@@ -15,6 +15,8 @@
 */
 package net.hedges.fandangled.bindings.domain;
 
+import net.hedges.fandangled.bindings.domain.document.Document;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class Interface {
 	private List<Author> authors = new ArrayList<Author>();
 	private Owner owner;
 	private Version version;
-	private String description;
+	private Document description;
     private String organisation;
 	private String namespacePrefix;
     private String organisationDomainName;
@@ -76,11 +78,11 @@ public class Interface {
 		this.version = version;
 	}
 
-	public String getDescription() {
+	public Document getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(Document description) {
 		this.description = description;
 	}
 

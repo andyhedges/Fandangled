@@ -15,15 +15,17 @@
 */
 package net.hedges.fandangled.bindings.domain;
 
+import net.hedges.fandangled.bindings.domain.document.Document;
+
 public class ThrownException {
-	private String description;
+	private Document description;
 	private String typeName;
 
-	public String getDescription() {
+	public Document getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(Document description) {
 		this.description = description;
 	}
 

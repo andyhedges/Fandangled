@@ -167,10 +167,7 @@ OPEN_LIST : 'list<';
 CLOSE_COLLECTION : '>';
 
 STRING_LITERAL
-    :   '"' ('\\"' | ~('"'))* '"' {
-		String text = StringUtils.normalise(getText());
-    	setText(text);
-    };
+    :   '"' ('\\"' | ~('"'))* '"';
 
 EVENT_STR : 'event';
 

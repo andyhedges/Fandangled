@@ -27,7 +27,9 @@ options {
     import java.util.Map;
     import java.util.LinkedHashMap;
 
+    import net.hedges.fandangled.bindings.builder.*;
     import net.hedges.fandangled.bindings.domain.*;
+    import net.hedges.fandangled.bindings.domain.document.*;
     import net.hedges.fandangled.bindings.domain.Exception; //This is so that our Exception take priority over java.lang's version
 }
 
@@ -87,10 +89,10 @@ versionAnnotation returns [Version version]
 			$version.setValue($VERSION.text);
 		};
 		
-descriptionAnnotation returns [String description]
+descriptionAnnotation returns [Document description]
 		: ^(DESC STRING_LITERAL)
 		{
-			$description = $STRING_LITERAL.text;		
+			$description = DocumentBuilder.parse($STRING_LITERAL.text);
 		};
 
 organisationAnnotation returns [String organisation]
@@ -116,14 +118,14 @@ parameterAnnotation [Map<String, Parameter> parameters] returns [Parameter param
 		{
 			$parameter = parameters.get($ID.text) == null ? new Parameter() : parameters.get($ID.text);
 			parameter.setName($ID.text);
-			$parameter.setDescription($STRING_LITERAL.text);
+			$parameter.setDescription(DocumentBuilder.parse($STRING_LITERAL.text));
 		};
 				
 exceptionAnnotation returns [ThrownException thrownException]
 		: ^(EXCEPT ID STRING_LITERAL)
 		{
 			$thrownException = new ThrownException();
-			$thrownException.setDescription($STRING_LITERAL.text);
+			$thrownException.setDescription(DocumentBuilder.parse($STRING_LITERAL.text));
 			$thrownException.setTypeName($ID.text);
 		};
 		
@@ -137,7 +139,7 @@ sinceAnnotation returns [Since since]
 returnAnnotation [Return ret]
 		: ^(RETURN STRING_LITERAL)
 		{
-			ret.setDescription($STRING_LITERAL.text);
+			ret.setDescription(DocumentBuilder.parse($STRING_LITERAL.text));
 		};
 		
 valueAnnotation returns [Value value]
@@ -145,7 +147,7 @@ valueAnnotation returns [Value value]
 		{
 			$value = new Value();
 			$value.setName($ID.text);
-			$value.setDescription($STRING_LITERAL.text);
+			$value.setDescription(DocumentBuilder.parse($STRING_LITERAL.text));
 		};
 	 
 structure : 

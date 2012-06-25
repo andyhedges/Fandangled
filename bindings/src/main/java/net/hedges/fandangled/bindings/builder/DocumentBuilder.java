@@ -16,7 +16,7 @@ import org.antlr.runtime.tree.Tree;
  */
 public class DocumentBuilder {
 
-    public static Document parse(String text) throws FandangledBindingException {
+    public static Document parse(String text) {
         CharStream cs = new ANTLRStringStream(text);
         FandangledMarkupLexer lexer = new FandangledMarkupLexer(cs);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -31,7 +31,7 @@ public class DocumentBuilder {
             Document document = walker.document();
             return document;
         } catch (RecognitionException e) {
-            throw new FandangledBindingException(e);
+            return new Document();
         }
     }
 }
