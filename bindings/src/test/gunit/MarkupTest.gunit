@@ -24,5 +24,7 @@ WORD:
 paragraph:
     "this should be OK" OK
     "this should also be OK." OK
+    <<this should
+    be ok>> OK
 
 

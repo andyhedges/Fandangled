@@ -28,4 +28,4 @@ LITERAL_DELIM : '\"';
 
 PARAGRAPH_BREAK : '\n\n';
 
-SPACE : (' ' | '\t' | '\r');
+SPACE : (' ' | '\t' | '\r' | '\n' ~'\n' | ~'\n' '\n');
