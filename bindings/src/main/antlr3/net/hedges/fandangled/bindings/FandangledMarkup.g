@@ -15,7 +15,7 @@ options {
 }
 
 document 
-	:	LITERAL_DELIM (paragraph PARAGRAPH_BREAK)? paragraph LITERAL_DELIM;
+	:	LITERAL_DELIM ((paragraph PARAGRAPH_BREAK)? paragraph)? LITERAL_DELIM;
 
 paragraph :  SPACE* (WORD SPACE*)+;
 

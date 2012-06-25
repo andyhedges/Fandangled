@@ -36,6 +36,32 @@ paragraph:
 
     be ok>> FAIL
 
+document:
+    <<"basic test">> OK
+    <<"">> OK
+
+    <<"this should
+
+    be ok">> OK
+
+    <<"This should
+
+    be
+
+    fine
+
+    too
+
+    ">> OK
+
+    <<"This
+    is one
+    para">> OK
+
+    <<"
+
+    This is ok">> OK
+
 
 
 
