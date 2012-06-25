@@ -38,7 +38,6 @@ public class InterfaceBuilder {
 	public static Interface parse(InputStream in)
 			throws FandangledBindingException {
 		try {
-			Interface _interface = new Interface();
 			CharStream cs = new ANTLRInputStream(in);
 			FandangledLexer lexer = new FandangledLexer(cs);
 			CommonTokenStream tokens = new CommonTokenStream(lexer);

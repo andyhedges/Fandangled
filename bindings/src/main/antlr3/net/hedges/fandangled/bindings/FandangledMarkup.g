@@ -6,6 +6,11 @@ options {
    ASTLabelType=CommonTree;
 }
 
+tokens {
+ WORDS;
+ PARAGRAPHS;
+}
+
 @header {
     package net.hedges.fandangled.bindings;
 }
@@ -15,9 +20,9 @@ options {
 }
 
 document 
-	:	LITERAL_DELIM ((paragraph PARAGRAPH_BREAK)? paragraph)? LITERAL_DELIM;
+	:	LITERAL_DELIM ((paragraph PARAGRAPH_BREAK)? paragraph)? LITERAL_DELIM -> ^(PARAGRAPHS paragraph*);
 
-paragraph :  SPACE* (WORD SPACE*)+;
+paragraph :  SPACE* (WORD SPACE*)+ -> ^(WORDS WORD+);
 
 WORD 	:	 CHARACTER+;
 
