@@ -24,10 +24,18 @@ WORD:
 paragraph:
     "this should be OK" OK
     "this should also be OK." OK
+    "This should be ok  " OK
+    "  So should this  " OK
+    "  As should this" OK
+    "Two  spaces" OK
+
     <<this should
     be ok>> OK
+
     <<this shouldn't
 
     be ok>> FAIL
+
+
 
 
