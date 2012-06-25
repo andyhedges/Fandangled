@@ -26,5 +26,8 @@ paragraph:
     "this should also be OK." OK
     <<this should
     be ok>> OK
+    <<this shouldn't
+
+    be ok>> FAIL
 
 
