@@ -62,7 +62,6 @@ public class WsdlCodec implements Codec {
                         serviceInterface.getName() + "-interface-" + serviceInterface.getVersion().getValue() + ".wsdl")));
             }
             StringWriter proxy = new StringWriter();
-
             Map<String, Object> root = new HashMap<String, Object>();
             root.put("interface", serviceInterface);
             root.put("xsdOnly", xsdOnly);

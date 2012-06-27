@@ -73,7 +73,7 @@ ownerAnnotation	returns [Owner owner]
 								$owner.setName($name.text);
 								$owner.setEmail($email.text);
 							};
-							
+
 authorAnnotation returns [Author author]
 		: ^(AUTHOR name=STRING_LITERAL email=STRING_LITERAL)
 		{
@@ -81,14 +81,14 @@ authorAnnotation returns [Author author]
 			$author.setName($name.text);
 			$author.setEmail($email.text);
 		};
-		
+
 versionAnnotation returns [Version version]
 		: ^(VERS VERSION)
 		{
 			$version = new Version();
 			$version.setValue($VERSION.text);
 		};
-		
+
 descriptionAnnotation returns [Document description]
 		: ^(DESC STRING_LITERAL)
 		{
@@ -112,7 +112,7 @@ organisationDomainNameAnnotation returns [String organisationDomainName]
 		{
 			$organisationDomainName = $STRING_LITERAL.text;
 		};
-		
+
 parameterAnnotation [Map<String, Parameter> parameters] returns [Parameter parameter]
 		: ^(PARAM ID STRING_LITERAL)
 		{
@@ -120,7 +120,7 @@ parameterAnnotation [Map<String, Parameter> parameters] returns [Parameter param
 			parameter.setName($ID.text);
 			$parameter.setDescription(DocumentBuilder.parse($STRING_LITERAL.text));
 		};
-				
+
 exceptionAnnotation returns [ThrownException thrownException]
 		: ^(EXCEPT ID STRING_LITERAL)
 		{
@@ -128,20 +128,20 @@ exceptionAnnotation returns [ThrownException thrownException]
 			$thrownException.setDescription(DocumentBuilder.parse($STRING_LITERAL.text));
 			$thrownException.setTypeName($ID.text);
 		};
-		
+
 sinceAnnotation returns [Since since]
 		: ^(SINCE VERSION)
 		{
 			$since = new Since();
 			$since.setValue($VERSION.text);
 		};
-		
+
 returnAnnotation [Return ret]
 		: ^(RETURN STRING_LITERAL)
 		{
 			ret.setDescription(DocumentBuilder.parse($STRING_LITERAL.text));
 		};
-		
+
 valueAnnotation returns [Value value]
 		: ^(VALUE ID STRING_LITERAL?)
 		{

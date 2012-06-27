@@ -101,8 +101,8 @@ public class TestFandangledMarkup extends gUnitBaseTest {
 	}
 
 	public void testDocument1() throws Exception {
-		// test input: "\"basic test\""
-		Object retval = execParser("document", "\"basic test\"", false);
+		// test input: "basic test"
+		Object retval = execParser("document", "basic test", false);
 		Object actual = examineExecResult(org.antlr.gunit.gUnitParser.OK, retval);
 		Object expecting = "OK";
 
@@ -110,8 +110,8 @@ public class TestFandangledMarkup extends gUnitBaseTest {
 	}
 
 	public void testDocument2() throws Exception {
-		// test input: "\"\""
-		Object retval = execParser("document", "\"\"", false);
+		// test input: ""
+		Object retval = execParser("document", "", false);
 		Object actual = examineExecResult(org.antlr.gunit.gUnitParser.OK, retval);
 		Object expecting = "OK";
 
@@ -119,8 +119,8 @@ public class TestFandangledMarkup extends gUnitBaseTest {
 	}
 
 	public void testDocument3() throws Exception {
-		// test input: "\"this should\r\n\r\nbe ok\""
-		Object retval = execParser("document", "\"this should\r\n\r\nbe ok\"", false);
+		// test input: "this should\r\n\r\nbe ok"
+		Object retval = execParser("document", "this should\r\n\r\nbe ok", false);
 		Object actual = examineExecResult(org.antlr.gunit.gUnitParser.OK, retval);
 		Object expecting = "OK";
 
@@ -128,8 +128,8 @@ public class TestFandangledMarkup extends gUnitBaseTest {
 	}
 
 	public void testDocument4() throws Exception {
-		// test input: "\"This should\r\n\r\nbe\r\n\r\nfine\r\n\r\ntoo\r\n\r\n\""
-		Object retval = execParser("document", "\"This should\r\n\r\nbe\r\n\r\nfine\r\n\r\ntoo\r\n\r\n\"", false);
+		// test input: "This should\r\n\r\nbe\r\n\r\nfine\r\n\r\ntoo\r\n\r\n"
+		Object retval = execParser("document", "This should\r\n\r\nbe\r\n\r\nfine\r\n\r\ntoo\r\n\r\n", false);
 		Object actual = examineExecResult(org.antlr.gunit.gUnitParser.OK, retval);
 		Object expecting = "OK";
 
@@ -137,8 +137,8 @@ public class TestFandangledMarkup extends gUnitBaseTest {
 	}
 
 	public void testDocument5() throws Exception {
-		// test input: "\"This\r\nis one\r\npara\""
-		Object retval = execParser("document", "\"This\r\nis one\r\npara\"", false);
+		// test input: "This\r\nis one\r\npara"
+		Object retval = execParser("document", "This\r\nis one\r\npara", false);
 		Object actual = examineExecResult(org.antlr.gunit.gUnitParser.OK, retval);
 		Object expecting = "OK";
 
@@ -146,8 +146,8 @@ public class TestFandangledMarkup extends gUnitBaseTest {
 	}
 
 	public void testDocument6() throws Exception {
-		// test input: "\"\r\n\r\nThis is ok\""
-		Object retval = execParser("document", "\"\r\n\r\nThis is ok\"", false);
+		// test input: "This is ok"
+		Object retval = execParser("document", "This is ok", false);
 		Object actual = examineExecResult(org.antlr.gunit.gUnitParser.OK, retval);
 		Object expecting = "OK";
 
@@ -155,8 +155,8 @@ public class TestFandangledMarkup extends gUnitBaseTest {
 	}
 
 	public void testDocument7() throws Exception {
-		// test input: "\"Testing out \\\"quotes\\\"\""
-		Object retval = execParser("document", "\"Testing out \\\"quotes\\\"\"", false);
+		// test input: "Testing out \\\"quotes\\\""
+		Object retval = execParser("document", "Testing out \\\"quotes\\\"", false);
 		Object actual = examineExecResult(org.antlr.gunit.gUnitParser.OK, retval);
 		Object expecting = "OK";
 

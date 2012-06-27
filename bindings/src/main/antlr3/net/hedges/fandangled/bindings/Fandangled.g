@@ -167,7 +167,9 @@ OPEN_LIST : 'list<';
 CLOSE_COLLECTION : '>';
 
 STRING_LITERAL
-    :   '"' ('\\"' | ~('"'))* '"';
+    :   '"' ('\\"' | ~('"'))* '"'{
+        setText(getText().substring(1, getText().length()-1));
+    };
 
 EVENT_STR : 'event';
 

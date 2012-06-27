@@ -20,15 +20,13 @@ tokens {
 }
 
 document 
-	:	LITERAL_DELIM ( PARAGRAPH_BREAK? (paragraph PARAGRAPH_BREAK)* paragraph)? PARAGRAPH_BREAK? LITERAL_DELIM -> ^(PARAGRAPHS paragraph*);
+	:	( PARAGRAPH_BREAK? (paragraph PARAGRAPH_BREAK)* paragraph)? PARAGRAPH_BREAK? -> ^(PARAGRAPHS paragraph*);
 
 paragraph :  SPACE* (WORD NEWLINE? SPACE*)+ -> ^(WORDS WORD+);
 
 WORD 	:	  (CHARACTER | '\\"')*;
 
 fragment CHARACTER : '!' | '\u0023'..'\u007F';
-
-LITERAL_DELIM : '\"';
 
 PARAGRAPH_BREAK : NEWLINE NEWLINE;
 

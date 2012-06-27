@@ -37,14 +37,14 @@ paragraph:
     be ok>> FAIL
 
 document:
-    <<"basic test">> OK
-    <<"">> OK
+    <<basic test>> OK
+    <<>> OK
 
-    <<"this should
+    <<this should
 
-    be ok">> OK
+    be ok>> OK
 
-    <<"This should
+    <<This should
 
     be
 
@@ -52,17 +52,15 @@ document:
 
     too
 
-    ">> OK
+    >> OK
 
-    <<"This
+    <<This
     is one
-    para">> OK
+    para>> OK
 
-    <<"
+    <<This is ok>> OK
 
-    This is ok">> OK
-
-    <<"Testing out \"quotes\"">> OK
+    <<Testing out \"quotes\">> OK
 
 
 

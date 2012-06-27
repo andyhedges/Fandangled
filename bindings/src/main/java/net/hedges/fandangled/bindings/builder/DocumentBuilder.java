@@ -17,6 +17,7 @@ import org.antlr.runtime.tree.Tree;
 public class DocumentBuilder {
 
     public static Document parse(String text) {
+        if(text == null) return new Document();
         CharStream cs = new ANTLRStringStream(text);
         FandangledMarkupLexer lexer = new FandangledMarkupLexer(cs);
         CommonTokenStream tokens = new CommonTokenStream(lexer);

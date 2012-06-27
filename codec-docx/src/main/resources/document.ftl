@@ -23,11 +23,7 @@
 			<w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
 			<w:r><w:t>Overview</w:t></w:r>
 		</w:p>
-		<w:p>
-			<w:pPr><w:pStyle w:val="Normal"/></w:pPr>
-			<w:r><w:t>${description?xml}</w:t></w:r>
-		</w:p>
-
+		<@document description/>
 		<!-- operations -->
 		<w:p>
 			<w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
@@ -38,9 +34,7 @@
 			    <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
                 <w:r><w:t>Operation: ${operation.name?xml} <#if operation.async>(async)</#if></w:t></w:r>
             </w:p>
-            <w:p><w:pPr><w:pStyle w:val="Normal"/></w:pPr>
-                <w:r><w:t>${operation.description?xml}</w:t></w:r>
-            </w:p>
+            <@document operation.description/>
             <w:p>
                 <w:pPr><w:pStyle w:val="Heading3"/></w:pPr>
                 <w:r><w:t>Request Parameters</w:t></w:r>
@@ -70,10 +64,7 @@
                 <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
                 <w:r><w:t>Event: ${event.name?xml}</w:t></w:r>
             </w:p>
-            <w:p>
-                <w:pPr><w:pStyle w:val="Normal"/></w:pPr>
-                <w:r><w:t>${event.description?xml}</w:t></w:r>
-            </w:p>
+	    <@document event.description/>
             <w:tbl>
                 <@parameterTableHeader/>
                 <@parameterTable parameters=event.parameters/>
@@ -90,10 +81,7 @@
                 <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
                 <w:r><w:t>Exception: ${exception.name?xml}</w:t></w:r>
             </w:p>
-            <w:p>
-                <w:pPr><w:pStyle w:val="Normal"/></w:pPr>
-                <w:r><w:t>${exception.description?xml}</w:t></w:r>
-            </w:p>
+	    <@document exception.description/>
             <w:tbl>
                 <@parameterTableHeader/>
                 <@parameterTable parameters=exception.parameters/>
@@ -110,10 +98,7 @@
                 <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
                 <w:r><w:t>Type: ${type.name?xml}</w:t></w:r>
             </w:p>
-            <w:p>
-                <w:pPr><w:pStyle w:val="Normal"/></w:pPr>
-                <w:r><w:t>${type.description?xml}</w:t></w:r>
-            </w:p>
+	    <@document type.description/>
             <w:tbl>
                 <@parameterTableHeader/>
                 <@parameterTable parameters=type.parameters/>
@@ -130,10 +115,7 @@
                 <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
                 <w:r><w:t>Enumeration: ${enumeration.name?xml}</w:t></w:r>
             </w:p>
-            <w:p>
-                <w:pPr><w:pStyle w:val="Normal"/></w:pPr>
-                <w:r><w:t>${enumeration.description?xml}</w:t></w:r>
-            </w:p>
+	    <@document enumeration.description/>
             <w:tbl>
                 <w:tblPr>
                     <w:tblStyle w:val="ColorfulList-Accent3"/>
@@ -162,7 +144,7 @@
                         </w:tc>
                         <w:tc>
                             <w:tcPr><w:tcW w:w="6318" w:type="dxa"/></w:tcPr>
-                            <w:p><w:r><w:rPr/><w:t>${(value.description!"No description")?xml}</w:t></w:r></w:p>
+                            <@document value.description/>
                         </w:tc>
                     </w:tr>
                 </#list>
@@ -176,6 +158,22 @@
 </w:document>
 
 <!-- macros -->
+
+<#macro document description>
+	<#if description.paragraphs?has_content>
+		<#list description.paragraphs as paragraph>
+			<w:p>
+				<w:pPr><w:pStyle w:val="Normal"/></w:pPr>
+				<w:r><w:t>${paragraph.text?xml}</w:t></w:r>
+			</w:p>
+		</#list>
+	<#else>
+		<w:p>
+			<w:pPr><w:pStyle w:val="Normal"/></w:pPr>
+			<w:r><w:t>No content</w:t></w:r>
+		</w:p>
+	</#if>
+</#macro>
 
 <#macro parameterTableHeader>
     <w:tblPr>
@@ -226,7 +224,7 @@
             </w:tc>
             <w:tc>
                 <w:tcPr><w:tcW w:w="4964" w:type="dxa"/></w:tcPr>
-                <w:p><w:r><w:rPr/><w:t>${parameter.description?xml}</w:t></w:r></w:p>
+                <@document parameter.description/>
             </w:tc>
         </w:tr>
     </#list>
@@ -259,7 +257,7 @@
         </w:tc>
         <w:tc>
             <w:tcPr><w:tcW w:w="6318" w:type="dxa"/></w:tcPr>
-            <w:p><w:r><w:rPr/><w:t>${return.description?xml}</w:t></w:r></w:p>
+            <@document return.description/>
         </w:tc>
     </w:tr>
 </#macro>
