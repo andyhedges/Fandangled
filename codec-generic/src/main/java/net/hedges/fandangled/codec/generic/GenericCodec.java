@@ -6,7 +6,6 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 import net.hedges.fandangled.bindings.domain.*;
-import net.hedges.fandangled.bindings.domain.Exception;
 import net.hedges.fandangled.codec.commons.Codec;
 import net.hedges.fandangled.codec.commons.TranscodingException;
 
@@ -24,60 +23,65 @@ import java.util.Map;
 public class GenericCodec implements Codec {
 
     Configuration cfg = new Configuration();
-    
+
     private String templatePath = ".";
     private String extension = ".txt";
     private String prefix = "Fandangled-";
 
     public GenericCodec() {
-        cfg.setObjectWrapper(new DefaultObjectWrapper());
-        cfg.setClassForTemplateLoading(this.getClass(), "/");
+
     }
 
     public void encode(Interface serviceInterface, File outputDirectory) throws TranscodingException {
 
+
+        try {
+            cfg.setObjectWrapper(new DefaultObjectWrapper());
+            cfg.setDirectoryForTemplateLoading(new File(templatePath));
+        } catch (IOException ioe) {
+            throw new TranscodingException("Couldn't find template directory: " + templatePath, ioe);
+        }
+
         File dir = new File(outputDirectory, serviceInterface.getName());
         dir.mkdirs();
 
-        List<Type> types = serviceInterface.getTypes();
-        for (Type type : types) {
-            Map<String, Object> rootMap = new HashMap<String, Object>();
-            rootMap.put("interface", serviceInterface);
-            rootMap.put("type", type);
-            create("Type.ftl", rootMap, new File(dir, prefix + type.getName() + extension));
+        Map<String, Object> rootMap = new HashMap<String, Object>();
+        rootMap.put("interface", serviceInterface);
+        create("interface.ftl", rootMap, new File(dir, prefix + serviceInterface.getName() + extension));
+
+        processEntity(serviceInterface, "type", serviceInterface.getTypes(), dir);
+        processEntity(serviceInterface, "event", serviceInterface.getEvents(), dir);
+        processEntity(serviceInterface, "operation", serviceInterface.getOperations(), dir);
+        processEntity(serviceInterface, "enumeration", serviceInterface.getEnumerations(), dir);
+        processEntity(serviceInterface, "exception", serviceInterface.getExceptions(), dir);
+
+    }
+
+    private <T extends AbstractEntity> void processEntity(Interface serviceInterface, String name, List<T> items, File outputDir) throws TranscodingException {
+        File individualTemplate = new File(templatePath, name + ".ftl");
+        Map<String, Object> rootMap = new HashMap<String, Object>();
+        if (individualTemplate.exists()) {
+            for (T i : items) {
+                rootMap = new HashMap<String, Object>();
+                rootMap.put("interface", serviceInterface);
+                rootMap.put(name, items);
+                create(name + ".ftl", rootMap, new File(outputDir, i.getName() + extension));
+            }
         }
 
-        List<net.hedges.fandangled.bindings.domain.Exception> exceptions = serviceInterface.getExceptions();
-        for (Exception exception : exceptions) {
-            Map<String, Object> rootMap = new HashMap<String, Object>();
+        File groupTemplate = new File(templatePath, name + "s.ftl");
+        if (groupTemplate.exists()) {
+            rootMap = new HashMap<String, Object>();
             rootMap.put("interface", serviceInterface);
-            rootMap.put("exception", exception);
-            create("Exception.ftl", rootMap, new File(dir, prefix + exception.getName() + extension));
+            rootMap.put(name + "s", items);
+            create(name + "s.ftl", rootMap, new File(outputDir, prefix + name + extension));
         }
-
-        List<Enumeration> enumerations = serviceInterface.getEnumerations();
-        for (Enumeration enumeration : enumerations) {
-            Map<String, Object> rootMap = new HashMap<String, Object>();
-            rootMap.put("interface", serviceInterface);
-            rootMap.put("enumeration", enumerations);
-            create("Enumeration.ftl", rootMap, new File(dir, prefix + enumeration.getName() + extension));
-        }
-
-        List<Event> events = serviceInterface.getEvents();
-        for (Event event : events) {
-            Map<String, Object> rootMap = new HashMap<String, Object>();
-            rootMap.put("interface", serviceInterface);
-            rootMap.put("event", enumerations);
-            create("Event.ftl", rootMap, new File(dir, event.getName() + ".cs"));
-        }
-
     }
 
     private void create(String templateName, Map<String, Object> rootMap, File outputFile) throws TranscodingException {
 
         PrintWriter out = null;
         try {
-
             Template template = cfg.getTemplate(templateName);
             out = new PrintWriter(new FileWriter(outputFile));
             template.process(rootMap, out);
@@ -93,4 +97,15 @@ public class GenericCodec implements Codec {
         }
     }
 
+    public void setTemplatePath(String templatePath) {
+        this.templatePath = templatePath;
+    }
+
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
 }

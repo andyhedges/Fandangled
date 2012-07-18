@@ -11,7 +11,7 @@
     <groupId>net.hedges.fandangled</groupId>
     <artifactId>codec-poco</artifactId>
     <version>0.0.2-SNAPSHOT</version>
-    <name>codec-poco</name>
+    <name>Fandangled codec-poco</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
