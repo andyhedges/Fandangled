@@ -20,7 +20,7 @@ import net.hedges.fandangled.bindings.domain.document.Document;
 public class Return {
 
 	private TypeInfo typeInfo;
-	private Document description;
+	private Document description = new Document();
 
 	public TypeInfo getTypeInfo() {
 		return typeInfo;

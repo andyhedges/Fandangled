@@ -28,7 +28,7 @@ public class Interface {
 	private List<Author> authors = new ArrayList<Author>();
 	private Owner owner;
 	private Version version;
-	private Document description;
+	private Document description = new Document();
     private String organisation;
 	private String namespacePrefix;
     private String organisationDomainName;

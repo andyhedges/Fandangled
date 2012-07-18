@@ -20,7 +20,7 @@ import net.hedges.fandangled.bindings.domain.document.Document;
 public abstract class AbstractEntity {
 
     private String name;
-    private Document description;
+    private Document description = new Document();
 
     public String getName() {
         return name;

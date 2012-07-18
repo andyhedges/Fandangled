@@ -18,7 +18,7 @@ package net.hedges.fandangled.bindings.domain;
 import net.hedges.fandangled.bindings.domain.document.Document;
 
 public class ThrownException {
-	private Document description;
+	private Document description = new Document();
 	private String typeName;
 
 	public Document getDescription() {
