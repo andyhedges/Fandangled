@@ -29,6 +29,7 @@
     <module>command-line</module>
     <module>basic-gui</module>
     <module>codec-poco</module>
+    <module>codec-generic</module>
   </modules>
 
     <build>

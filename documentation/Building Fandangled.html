@@ -7,7 +7,43 @@
 <h1>Building Fandangled</h1>
 
 <h2>TL;DR</h2>
-The 'too long; didn't read' version for the incurrably impatient
+<p>The 'too long; didn't read' version for the incurrably impatient</p>
+
+<p>You need:</p>
+<ul>
+<li>A copy of the <a href="https://github.com/andyhedges/Fandangled/zipball/v0.0.2"/>source code</a>, we'll assume you use wget to download but you can use your browser if you prefer</li>
+<li>A tool to unzip that, we'll assume gnu zip</li>
+<li>A JDK 1.6 or higher</li>
+<li>Maven 2 (haven't tried 3)</li>
+</ul>
+
+<p>To build run the following commands</p>
+<code>
+$ wget -O fandangled.zip --no-check-certificate https://github.com/andyhedges/Fandangled/zipball/v0.0.2
+$ unzip fandangled.zip
+$ cd andyhedges-Fandangled-29a1926
+$ mvn clean install
+</code>
+
+<p>Once maven has finished you should have a compiled set of jar files</p>
+
+<p>Unless you are a library user you will be interested in either of the two executable files, one is a gui the other is command line.
+The commandline is at the following path:</p>
+
+<code>
+command-line/target/command-line-0.0.2-SNAPSHOT.jar
+</code>
+
+<p>The gui is at the following path</p>
+
+<code>
+basic-gui/target/basic-gui-0.0.2-SNAPSHOT.jar
+</code>
+
+<p>I recommend you use the command line, the GUI was a bit of an experiement and gui design isn't my strength. If you fancy writing a better one
+please get in touch (tmp1@hedges.net put 'Fandangled' in the subject line somewhere)</p>
+
+
 
 </body>
 </html>
