@@ -64,7 +64,7 @@ public class GenericCodec implements Codec {
             for (T i : items) {
                 rootMap = new HashMap<String, Object>();
                 rootMap.put("interface", serviceInterface);
-                rootMap.put(name, items);
+                rootMap.put(name, i);
                 create(name + ".ftl", rootMap, new File(outputDir, i.getName() + extension));
             }
         }

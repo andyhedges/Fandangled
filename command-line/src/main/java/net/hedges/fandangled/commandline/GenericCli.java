@@ -63,7 +63,7 @@ public class GenericCli {
             codec.encode(_interface, outputDir);
 
         } catch (ParseException e) {
-            System.err.print(e.getMessage());
+            System.err.print(e.getMessage() + "\n");
             usage();
         } catch (Exception e) {
             e.printStackTrace();
